@@ -16,8 +16,8 @@ public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
     private let networkService: NetworkService
 
     // MARK: - Life cycle
-    public init() {
-        self.networkService = NetworkService()
+    public init(baseURL: String, apiKey: String) {
+        self.networkService = NetworkService(baseURL: baseURL, apiKey: apiKey)
     }
     
     public func fetchCurrentWeather(
@@ -25,7 +25,7 @@ public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
         longitude: String
     ) async throws -> WeatherDataModel {
         let result: WeatherDataModel = try await networkService.fetchData(
-            from: "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=daac32177cf1c717c43357a045f1654c"
+            from: "lat=\(latitude)&lon=\(longitude)"
         )
 
         return result

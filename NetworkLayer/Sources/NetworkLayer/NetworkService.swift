@@ -12,7 +12,13 @@ import Foundation
 ///
 public class NetworkService {
     
-    public init() { }
+    private var baseURL: String
+    private var apiKey: String
+    
+    public init(baseURL: String, apiKey: String) {
+        self.baseURL = baseURL
+        self.apiKey = apiKey
+    }
     
     /// Fetches and decodes JSON data from a given URL string.
     ///
@@ -21,7 +27,9 @@ public class NetworkService {
     /// - Throws: `APIError` in case of an invalid URL, request failure, invalid response, or decoding error.
     /// 
     public func fetchData<T: Decodable>(from urlString: String) async throws -> T {
-        guard let url = URL(string: urlString) else {
+        let urlValue = "\(baseURL)appid=\(apiKey)&\(urlString)"
+        
+        guard let url = URL(string: "\(urlValue)") else {
             throw APIError.invalidURL
         }
         

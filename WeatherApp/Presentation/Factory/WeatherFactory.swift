@@ -23,6 +23,9 @@ final class DefaultWeatherFactory: WeatherFactory {
     }
     
     private func makeWeatherRemoteAPI() -> WeatherRemoteAPI {
-        DefaultWeatherRemoteAPI()
+        DefaultWeatherRemoteAPI(
+            baseURL: ConfigurationManager.shared.baseUrl,
+            apiKey: ConfigurationManager.shared.apiKey
+        )
     }
 }

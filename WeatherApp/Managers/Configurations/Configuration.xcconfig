@@ -1,0 +1,9 @@
+//
+//  Untitled.swift
+//  WeatherApp
+//
+//  Created by Mostafa Mahmoud on 09/02/2025.
+//
+
+BASE_URL = https:/$()/api.openweathermap.org/data/2.5/weather?
+API_KEY = daac32177cf1c717c43357a045f1654c
