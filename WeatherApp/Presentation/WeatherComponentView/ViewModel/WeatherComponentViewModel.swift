@@ -26,7 +26,12 @@ final class WeatherComponentViewModel: ObservableObject {
 
 // MARK: - Fetch data request
 extension WeatherComponentViewModel {
-
+    
+    /// Fetches weather information for a given latitude and longitude.
+    ///
+    /// - Parameters:
+    ///   - latitude: The latitude of the location.
+    ///   - longitude: The longitude of the location.
     func fetchWeatherInfo(latitude: String, longitude: String) {
         
         Task(priority: .background) {
@@ -49,6 +54,7 @@ extension WeatherComponentViewModel {
 // MARK: - Private Methods
 extension WeatherComponentViewModel {
     
+    /// Triggers a UI update after the data has been modified.
     @MainActor
     private func reloadView() {
         objectWillChange.send()

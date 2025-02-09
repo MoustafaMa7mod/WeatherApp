@@ -20,7 +20,7 @@ public struct CountryDataModel: Codable {
     }
     
     public func toDomain() -> CountryItem {
-        return CountryItem(
+        CountryItem(
             countryName: name ?? "",
             latitude: latitude ?? 0,
             longitude: longitude ?? 0

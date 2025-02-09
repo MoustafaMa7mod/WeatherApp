@@ -23,7 +23,7 @@ public struct WeatherDataModel: Codable {
     }
     
     public func toDomain() -> WeatherItem {
-        return WeatherItem(
+        WeatherItem(
             id: id,
             cityName: name ?? "",
             temperatureDegree: temperature?.degree ?? 0,

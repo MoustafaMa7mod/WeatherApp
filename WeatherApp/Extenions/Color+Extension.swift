@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// An extension of `Color` to define custom app-specific colors.
 extension Color {
     
     static let appOrange = Color("Orange")

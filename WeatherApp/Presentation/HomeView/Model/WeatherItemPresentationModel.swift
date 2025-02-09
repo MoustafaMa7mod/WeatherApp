@@ -10,13 +10,14 @@ import SwiftUI
 
 struct WeatherItemPresentationModel: Identifiable {
  
-    let id: Int
-    let weatherCondition: String
-    let cityName: String
     private let temperature: Double
     private let humidity: Int
     private let speed: Double
     private let icon: String
+    
+    let id: Int
+    let weatherCondition: String
+    let cityName: String
     
     var weatherIcon: URL? {
         URL(string: "\(ConfigurationManager.shared.imageUrl)\(icon).png")

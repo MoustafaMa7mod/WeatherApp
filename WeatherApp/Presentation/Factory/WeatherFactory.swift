@@ -9,62 +9,16 @@ import Domain
 import Data
 import NetworkLayer
 
+/// A factory protocol for creating use cases related to weather and country searches.
 protocol WeatherFactory {
+    
+    /// Creates an instance of `GetWeatherUseCase` for fetching weather data.
+    ///
+    /// - Returns: A `GetWeatherUseCase` instance.
     func makeGetWeatherUseCase() -> GetWeatherUseCase
+    
+    /// Creates an instance of `SearchCountryUseCase` for searching countries.
+    ///
+    /// - Returns: A `SearchCountryUseCase` instance.
     func makeSearchWeatherUseCase() -> SearchCountryUseCase
-}
-
-final class DefaultWeatherFactory: WeatherFactory {
-
-    func makeGetWeatherUseCase() -> GetWeatherUseCase {
-        DefaultGetWeatherUseCase(repository: makeWeatherRepository())
-    }
-    
-    func makeSearchWeatherUseCase() -> SearchCountryUseCase {
-        DefaultSearchCountryUseCase(repository: makeSearchWeatherRepository())
-    }
-}
-
-// MARK: - make get weather view
-extension DefaultWeatherFactory {
-    
-    private func makeWeatherRepository() -> WeatherRepository {
-        DefaultWeatherRepository(weatherRemoteAPI: makeWeatherRemoteAPI())
-    }
-    
-    private func makeWeatherRemoteAPI() -> WeatherRemoteAPI {
-        DefaultWeatherRemoteAPI(
-            networkService: makeWeatherNetworkService()
-        )
-    }
-    
-    private func makeWeatherNetworkService() -> NetworkService {
-        NetworkService(
-            baseURL: ConfigurationManager.shared.baseUrl,
-            apiKey: ConfigurationManager.shared.apiKey
-        )
-    }
-}
-
-// MARK: - make search country view
-extension DefaultWeatherFactory {
-    
-    private func makeSearchWeatherRepository() -> SearchCountryRepository {
-        DefaultSearchCountryRepository(
-            searchCountryRemoteAPI: makeSearchWeatherRemoteAPI()
-        )
-    }
-    
-    private func makeSearchWeatherRemoteAPI() -> SearchCountryRemoteAPI {
-        DefaultSearchCountryRemoteAPI(
-            networkService: makeSearchWeatherNetworkService()
-        )
-    }
-    
-    private func makeSearchWeatherNetworkService() -> NetworkService {
-        NetworkService(
-            baseURL: ConfigurationManager.shared.searchUrl,
-            apiKey: ConfigurationManager.shared.apiKey
-        )
-    }
 }

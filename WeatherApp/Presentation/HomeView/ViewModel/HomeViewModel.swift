@@ -16,6 +16,7 @@ final class HomeViewModel: ObservableObject {
     var weatherItemPresentationModel: WeatherItemPresentationModel?
     var weatherComponentViewModel: WeatherComponentViewModel?
     
+    /// A published property to track whether location access is denied.
     @Published var locationDenied = false
 
     init(useCase: GetWeatherUseCase) {
@@ -29,6 +30,7 @@ final class HomeViewModel: ObservableObject {
 // MARK: - Private Methods
 extension HomeViewModel {
 
+    /// Initializes the view model by checking the user's location and setting up the weather component.
     private func initialViewModel() {
         
         guard let location = locationManager.userLocation else {
@@ -36,6 +38,7 @@ extension HomeViewModel {
             return
         }
 
+        /// Creates a `WeatherComponentViewModel` instance with the user's location.
         weatherComponentViewModel = WeatherComponentViewModel(
             useCase: useCase,
             latitude: location.latitude.description,
@@ -47,6 +50,9 @@ extension HomeViewModel {
 // MARK: - Location Manager
 extension HomeViewModel: LocationManager {
     
+    /// Called when the user's location is successfully updated.
+    ///
+    /// - Parameter coordinate: The updated coordinates of the user's location.
     func didUpdateLocation(_ coordinate: CLLocationCoordinate2D) {
 
         if let weatherComponentViewModel {
@@ -58,6 +64,9 @@ extension HomeViewModel: LocationManager {
         }
     }
 
+    /// Called when the location manager encounters an error.
+    ///
+    /// - Parameter error: The error that occurred.
     func didFailWithError(_ error: Error) {
         locationDenied = true
     }
