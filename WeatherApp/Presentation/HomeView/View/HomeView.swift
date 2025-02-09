@@ -18,6 +18,7 @@ struct HomeView: View {
             content
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.appBlue)
         .ignoresSafeArea()
     }
     
@@ -45,8 +46,8 @@ struct HomeView: View {
 
                     Spacer()
                     Text(item.weatherCondition)
-                        .font(.title)
-                        .foregroundColor(Color.blue)
+                        .font(.system(size: 18))
+                        .foregroundColor(Color.darkAppBlue)
                 }
                 .padding(.horizontal, 12)
                 
@@ -58,8 +59,8 @@ struct HomeView: View {
 
                     Spacer()
                     Text(item.temperatureDegree)
-                        .font(.title)
-                        .foregroundColor(Color.blue)
+                        .font(.system(size: 18))
+                        .foregroundColor(Color.darkAppBlue)
                 }
                 .padding(.horizontal, 12)
 
@@ -71,8 +72,8 @@ struct HomeView: View {
 
                     Spacer()
                     Text(item.weatherHumidity)
-                        .font(.title)
-                        .foregroundColor(Color.blue)
+                        .font(.system(size: 18))
+                        .foregroundColor(Color.darkAppBlue)
                 }
                 .padding(.horizontal, 12)
 
@@ -84,7 +85,7 @@ struct HomeView: View {
 
                     Spacer()
                     Text(item.windSpeed)
-                        .font(.title)
+                        .font(.system(size: 18))
                         .foregroundColor(Color.blue)
                 }
                 .padding(.horizontal, 12)
