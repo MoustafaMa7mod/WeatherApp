@@ -10,7 +10,6 @@ import SwiftUI
 struct SearchView: View {
 
     @StateObject var viewModel: SearchViewModel
-    @State private var results: [String] = [] // Start with an empty list
     
     init(viewModel: SearchViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel) // Initialize viewModel
@@ -26,16 +25,27 @@ struct SearchView: View {
                     .appBlue
                     .ignoresSafeArea()
                 
-                List(results, id: \.self) { item in
-                    Text(item)
+                List(viewModel.items, id: \.id) { item in
+                    
+                    HStack(alignment: .center, spacing: 4) {
+                        Text(item.countryName)
+                            .font(.system(size: 18))
+                        
+                        Spacer()
+                        
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.white)
+
+                    }
+                    .listRowBackground(Color.darkAppBlue)
+
                 }
-                .background(Color.clear)
+                .padding(.top, 4)
+                .scrollContentBackground(.hidden)
+                .background(.clear)
             }
             .navigationTitle("Search")
             .searchable(text: $viewModel.cityName, prompt: "Search")
-//            .onChange(of: cityName) { newValue in
-//                //                fetchResults(for: newValue)
-//            }
         }
     }
 }

@@ -14,7 +14,7 @@ final class SearchViewModel: ObservableObject {
     private var useCase: SearchCountryUseCase
     private let locationManager = DefaultLocationManager()
     private var cancellable = Set<AnyCancellable>()
-    var weatherItemsPresentationModel: [WeatherItemPresentationModel] = []
+    var items: [CountryItemPresentationModel] = []
     
     @Published var cityName = ""
 
@@ -29,18 +29,17 @@ final class SearchViewModel: ObservableObject {
             .removeDuplicates()
             .sink { [weak self] query in
                 guard let self, !query.isEmpty else {
-                    self?.weatherItemsPresentationModel = []
+                    self?.items = []
                     return
                 }
                
                 Task(priority: .background) {
                     
                     do {
-                        let item = try await self.useCase.execute(name: query)
+                        let items = try await self.useCase.execute(name: query)
+                        self.items = items.map { CountryItemPresentationModel(model: $0) }
                         
-                        print("DEBUG: items \(item)")
-                        
-//                        await reloadView()
+                        await self.reloadView()
                     } catch _ {
                         //                        await handleResponseError(error)
                     }
@@ -49,5 +48,8 @@ final class SearchViewModel: ObservableObject {
             .store(in: &cancellable)
     }
     
-    
+    @MainActor
+    private func reloadView() {
+        objectWillChange.send()
+    }
 }

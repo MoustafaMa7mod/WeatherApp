@@ -94,7 +94,6 @@ struct HomeView: View {
                 Text(item.weatherHumidity)
                     .font(.system(size: 18))
                     .foregroundColor(Color.darkAppBlue)
-
             }
             .padding(16)
             .background(Color.white)
@@ -120,8 +119,6 @@ struct HomeView: View {
                         .font(.system(size: 18))
                         .foregroundColor(Color.black)
                         .opacity(0.65)
-                    
-                    
                 }
                 
                 Text(item.windSpeed)
