@@ -14,6 +14,7 @@ final class HomeViewModel: ObservableObject {
     private var useCase: GetWeatherUseCase
     private let locationManager = DefaultLocationManager()
     var weatherItemPresentationModel: WeatherItemPresentationModel?
+    var weatherComponentViewModel: WeatherComponentViewModel?
     
     @Published var locationDenied = false
 
@@ -21,39 +22,25 @@ final class HomeViewModel: ObservableObject {
         self.useCase = useCase
         locationManager.delegate = self
 
-        fetchWeatherInfo()
+        initialViewModel()
     }
 }
 
 // MARK: - Private Methods
 extension HomeViewModel {
-    
-    private func fetchWeatherInfo() {
+
+    private func initialViewModel() {
         
         guard let location = locationManager.userLocation else {
             locationManager.requestLocation()
             return
         }
-        
-        Task(priority: .background) {
-            
-            do {
-                let item = try await useCase.execute(
-                    latitude: location.latitude.description,
-                    longitude: location.longitude.description
-                )
-                
-                weatherItemPresentationModel = WeatherItemPresentationModel(model: item)
-                await reloadView()
-            } catch _ {
-                //                        await handleResponseError(error)
-            }
-        }
-    }
-    
-    @MainActor
-    private func reloadView() {
-        objectWillChange.send()
+
+        weatherComponentViewModel = WeatherComponentViewModel(
+            useCase: useCase,
+            latitude: location.latitude.description,
+            longitude: location.longitude.description
+        )
     }
 }
 
@@ -61,8 +48,14 @@ extension HomeViewModel {
 extension HomeViewModel: LocationManager {
     
     func didUpdateLocation(_ coordinate: CLLocationCoordinate2D) {
-        
-        fetchWeatherInfo()
+
+        if let weatherComponentViewModel {
+            
+            weatherComponentViewModel.fetchWeatherInfo(
+                latitude: coordinate.latitude.description,
+                longitude: coordinate.longitude.description)
+            
+        }
     }
 
     func didFailWithError(_ error: Error) {
