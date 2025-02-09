@@ -28,7 +28,10 @@ struct TabbarView: View {
                 }
                 
                 SearchView(
-                    viewModel: SearchViewModel(useCase: factory.makeSearchWeatherUseCase())
+                    viewModel: SearchViewModel(
+                        searchCountryUseCase: factory.makeSearchWeatherUseCase(),
+                        getWeatherUseCase: factory.makeGetWeatherUseCase()
+                    )
                 )
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")

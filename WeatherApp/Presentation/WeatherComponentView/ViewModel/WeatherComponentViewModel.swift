@@ -24,7 +24,7 @@ final class WeatherComponentViewModel: ObservableObject {
     }
 }
 
-// MARK: - Private Methods
+// MARK: - Fetch data request
 extension WeatherComponentViewModel {
 
     func fetchWeatherInfo(latitude: String, longitude: String) {
@@ -44,6 +44,10 @@ extension WeatherComponentViewModel {
             }
         }
     }
+}
+
+// MARK: - Private Methods
+extension WeatherComponentViewModel {
     
     @MainActor
     private func reloadView() {

@@ -26,19 +26,27 @@ struct SearchView: View {
                     .ignoresSafeArea()
                 
                 List(viewModel.items, id: \.id) { item in
+                    let weatherDetailsViewModel = viewModel.initialViewModel(
+                        latitude: "\(item.latitude)",
+                        longitude: "\(item.longitude )")
                     
-                    HStack(alignment: .center, spacing: 4) {
-                        Text(item.countryName)
-                            .font(.system(size: 18))
+                    NavigationLink(
+                        destination: WeatherDetailsView(
+                            viewModel: weatherDetailsViewModel
+                        )
+                    ) {
+                        HStack(alignment: .center, spacing: 4) {
+                            Text(item.countryName)
+                                .font(.system(size: 18))
+                            
+                            Spacer()
+                            
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.white)
+                        }
                         
-                        Spacer()
-                        
-                        Image(systemName: "info.circle")
-                            .foregroundColor(.white)
-
                     }
                     .listRowBackground(Color.darkAppBlue)
-
                 }
                 .padding(.top, 4)
                 .scrollContentBackground(.hidden)
