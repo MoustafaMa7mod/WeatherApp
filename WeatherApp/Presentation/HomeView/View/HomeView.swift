@@ -24,10 +24,27 @@ struct HomeView: View {
     
     @ViewBuilder
     var content: some View {
+        
+        VStack(alignment: .center, spacing: 12) {
+            weatherInfo
+            
+            HStack(alignment: .center, spacing: 12) {
+                
+                weatherHumidity
+                windSpeed
+            }
+        }
+    }
+    
+    @ViewBuilder
+    var weatherInfo: some View {
+        
         if let item = viewModel.weatherItemPresentationModel {
-         
-            VStack(alignment: .center, spacing: 16) {
+           
+            VStack(alignment: .center, spacing: 4) {
+               
                 if let weatherIcon = item.weatherIcon {
+                    
                     KFImage(weatherIcon)
                         .placeholder {
                             ProgressView()
@@ -38,64 +55,84 @@ struct HomeView: View {
                         .frame(width: 80, height: 80)
                 }
                 
-                HStack(alignment: .center) {
-                    Text("Description")
-                        .font(.headline)
-                        .foregroundColor(Color.black)
-                        .opacity(0.65)
-
-                    Spacer()
-                    Text(item.weatherCondition)
-                        .font(.system(size: 18))
-                        .foregroundColor(Color.darkAppBlue)
-                }
-                .padding(.horizontal, 12)
+                Text(item.cityName)
+                    .font(.system(size: 20))
+                    .foregroundColor(Color.black)
                 
-                HStack(alignment: .center) {
-                    Text("Temperature")
-                        .font(.headline)
-                        .foregroundColor(Color.black)
-                        .opacity(0.65)
-
-                    Spacer()
-                    Text(item.temperatureDegree)
-                        .font(.system(size: 18))
-                        .foregroundColor(Color.darkAppBlue)
-                }
-                .padding(.horizontal, 12)
-
-                HStack(alignment: .center) {
-                    Text("Humidity")
-                        .font(.headline)
-                        .foregroundColor(Color.black)
-                        .opacity(0.65)
-
-                    Spacer()
-                    Text(item.weatherHumidity)
-                        .font(.system(size: 18))
-                        .foregroundColor(Color.darkAppBlue)
-                }
-                .padding(.horizontal, 12)
-
-                HStack(alignment: .center) {
-                    Text("Wind Speed")
-                        .font(.headline)
-                        .foregroundColor(Color.black)
-                        .opacity(0.65)
-
-                    Spacer()
-                    Text(item.windSpeed)
-                        .font(.system(size: 18))
-                        .foregroundColor(Color.blue)
-                }
-                .padding(.horizontal, 12)
-                .padding(.bottom, 24)
+                Text(item.temperatureDegree)
+                    .font(.system(size: 60, weight: .bold))
+                    .foregroundColor(Color.darkAppBlue)
+                
+                Text(item.weatherCondition)
+                    .font(.system(size: 40, weight: .light))
+                    .foregroundColor(Color.darkAppBlue)
             }
-            .frame(maxWidth: .infinity)
+        }
+    }
+    
+    @ViewBuilder
+    var weatherHumidity: some View {
+        
+        if let item = viewModel.weatherItemPresentationModel {
+          
+            VStack(alignment: .center, spacing: 8) {
+                
+                HStack(alignment: .center, spacing: 4) {
+                    Image("humidity")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                    
+                    Text("Humidity")
+                        .font(.system(size: 18))
+                        .foregroundColor(Color.black)
+                        .opacity(0.65)
+                    
+                    
+                }
+                
+                Text(item.weatherHumidity)
+                    .font(.system(size: 18))
+                    .foregroundColor(Color.darkAppBlue)
+
+            }
+            .padding(16)
             .background(Color.white)
             .cornerRadius(20)
             .shadow(radius: 20)
-            .padding(24)
+        }
+    }
+    
+    @ViewBuilder
+    var windSpeed: some View {
+        
+        if let item = viewModel.weatherItemPresentationModel {
+          
+            VStack(alignment: .center, spacing: 8) {
+                
+                HStack(alignment: .center, spacing: 4) {
+                    Image("wind")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                    
+                    Text("Wind Speed")
+                        .font(.system(size: 18))
+                        .foregroundColor(Color.black)
+                        .opacity(0.65)
+                    
+                    
+                }
+                
+                Text(item.windSpeed)
+                    .font(.system(size: 18))
+                    .foregroundColor(Color.darkAppBlue)
+
+            }
+            .padding(16)
+            .background(Color.white)
+            .cornerRadius(20)
+            .shadow(radius: 20)
         }
     }
 }

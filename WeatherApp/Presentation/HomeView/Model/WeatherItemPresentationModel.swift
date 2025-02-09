@@ -12,7 +12,7 @@ struct WeatherItemPresentationModel: Identifiable {
  
     let id: Int
     let weatherCondition: String
-    private let cityName: String
+    let cityName: String
     private let temperature: Double
     private let humidity: Int
     private let speed: Double
@@ -31,7 +31,7 @@ struct WeatherItemPresentationModel: Identifiable {
     }
     
     var temperatureDegree: String {
-        "\(temperature.getTemperature())"
+        "\(temperature.getTemperature())°"
     }
 
     init(model: WeatherItem) {
