@@ -7,11 +7,11 @@
 
 import NetworkLayer
 
-public protocol GetWeatherRemoteAPI {
-    func getCurrentWeather() async throws -> WeatherDataModel
+public protocol WeatherRemoteAPI {
+    func fetchCurrentWeather() async throws -> WeatherDataModel
 }
 
-public final class DefaultGetWeatherRemoteAPI: GetWeatherRemoteAPI {
+public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
 
     private let networkService: NetworkService
 
@@ -20,7 +20,7 @@ public final class DefaultGetWeatherRemoteAPI: GetWeatherRemoteAPI {
         self.networkService = networkService
     }
     
-    public func getCurrentWeather() async throws -> WeatherDataModel {
+    public func fetchCurrentWeather() async throws -> WeatherDataModel {
         let result: WeatherDataModel = try await networkService.fetchData(from: "https://api.example.com/data")
 
         return result

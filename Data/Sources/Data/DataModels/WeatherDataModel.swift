@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Domain
 
 public struct WeatherDataModel: Codable {
     
@@ -15,10 +16,15 @@ public struct WeatherDataModel: Codable {
     let windSpeed: WindSpeedDataModel?
     let temperature: TemperatureDataModel?
 
-//    public func toDomain() -> BusinessItem {
-//        return BusinessItem(id: id,
-//                            slug: slug ?? "",
-//                            name: name ?? "",
-//                            logo: logo ?? "")
-//    }
+    public func toDomain() -> WeatherItem {
+        return WeatherItem(
+            id: id,
+            cityName: name ?? "",
+            temperatureDegree: temperature?.degree ?? 0,
+            humidity: temperature?.humidity ?? 0,
+            windSpeed: windSpeed?.speed ?? 0,
+            weatherCondition: weather?.description ?? "",
+            icon: weather?.icon ?? ""
+        )
+    }
 }
