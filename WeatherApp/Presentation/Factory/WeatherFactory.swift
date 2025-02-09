@@ -11,7 +11,7 @@ import NetworkLayer
 
 protocol WeatherFactory {
     func makeGetWeatherUseCase() -> GetWeatherUseCase
-    func makeSearchWeatherUseCase() -> SearchWeatherUseCase
+    func makeSearchWeatherUseCase() -> SearchCountryUseCase
 }
 
 final class DefaultWeatherFactory: WeatherFactory {
@@ -20,8 +20,8 @@ final class DefaultWeatherFactory: WeatherFactory {
         DefaultGetWeatherUseCase(repository: makeWeatherRepository())
     }
     
-    func makeSearchWeatherUseCase() -> SearchWeatherUseCase {
-        DefaultSearchWeatherUseCase(repository: makeSearchWeatherRepository())
+    func makeSearchWeatherUseCase() -> SearchCountryUseCase {
+        DefaultSearchCountryUseCase(repository: makeSearchWeatherRepository())
     }
 }
 
@@ -46,17 +46,17 @@ extension DefaultWeatherFactory {
     }
 }
 
-// MARK: - make search weather view
+// MARK: - make search country view
 extension DefaultWeatherFactory {
     
-    private func makeSearchWeatherRepository() -> SearchWeatherRepository {
-        DefaultSearchWeatherRepository(
-            searchWeatherRemoteAPI: makeSearchWeatherRemoteAPI()
+    private func makeSearchWeatherRepository() -> SearchCountryRepository {
+        DefaultSearchCountryRepository(
+            searchCountryRemoteAPI: makeSearchWeatherRemoteAPI()
         )
     }
     
-    private func makeSearchWeatherRemoteAPI() -> SearchWeatherRemoteAPI {
-        DefaultSearchWeatherRemoteAPI(
+    private func makeSearchWeatherRemoteAPI() -> SearchCountryRemoteAPI {
+        DefaultSearchCountryRemoteAPI(
             networkService: makeSearchWeatherNetworkService()
         )
     }

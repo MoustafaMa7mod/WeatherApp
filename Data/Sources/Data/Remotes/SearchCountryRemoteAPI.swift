@@ -1,5 +1,5 @@
 //
-//  SearchWeatherRemoteAPI.swift
+//  SearchCountryRemoteAPI.swift
 //  Data
 //
 //  Created by Mostafa Mahmoud on 09/02/2025.
@@ -7,11 +7,11 @@
 
 import NetworkLayer
 
-public protocol SearchWeatherRemoteAPI {
-    func searchWeather(citName: String) async throws -> [CountryDataModel]
+public protocol SearchCountryRemoteAPI {
+    func searchCountry(name: String) async throws -> [CountryDataModel]
 }
 
-public final class DefaultSearchWeatherRemoteAPI: SearchWeatherRemoteAPI {
+public final class DefaultSearchCountryRemoteAPI: SearchCountryRemoteAPI {
 
     private let networkService: NetworkService
 
@@ -20,9 +20,9 @@ public final class DefaultSearchWeatherRemoteAPI: SearchWeatherRemoteAPI {
         self.networkService = networkService
     }
     
-    public func searchWeather(citName: String) async throws -> [CountryDataModel] {
+    public func searchCountry(name: String) async throws -> [CountryDataModel] {
         let result: [CountryDataModel] = try await networkService.fetchData(
-            from: "q=\(citName)&limit=10"
+            from: "q=\(name)&limit=10"
         )
 
         return result

@@ -11,14 +11,14 @@ import Combine
 
 final class SearchViewModel: ObservableObject {
 
-    private var useCase: SearchWeatherUseCase
+    private var useCase: SearchCountryUseCase
     private let locationManager = DefaultLocationManager()
     private var cancellable = Set<AnyCancellable>()
     var weatherItemsPresentationModel: [WeatherItemPresentationModel] = []
     
     @Published var cityName = ""
 
-    init(useCase: SearchWeatherUseCase) {
+    init(useCase: SearchCountryUseCase) {
         self.useCase = useCase
         setupSearchObserver()
     }
@@ -36,9 +36,7 @@ final class SearchViewModel: ObservableObject {
                 Task(priority: .background) {
                     
                     do {
-                        let item = try await self.useCase.execute(
-                            cityName: query
-                        )
+                        let item = try await self.useCase.execute(name: query)
                         
                         print("DEBUG: items \(item)")
                         
