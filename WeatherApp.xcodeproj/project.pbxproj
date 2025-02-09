@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		99C8C1D72D58C1C200F2A09E /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D62D58C1C200F2A09E /* Data */; };
 		99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D82D58C1C900F2A09E /* Domain */; };
+		99C8C1DC2D58C60800F2A09E /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1DB2D58C60800F2A09E /* NetworkLayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		99C8C0D92D5811EE00F2A09E /* WeatherAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C8C1CA2D58B65400F2A09E /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
 		99C8C1CC2D58B6EF00F2A09E /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
+		99C8C1DA2D58C5FF00F2A09E /* NetworkLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkLayer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99C8C1DC2D58C60800F2A09E /* NetworkLayer in Frameworks */,
 				99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */,
 				99C8C1D72D58C1C200F2A09E /* Data in Frameworks */,
 			);
@@ -97,6 +100,7 @@
 		99C8C0B12D5811ED00F2A09E = {
 			isa = PBXGroup;
 			children = (
+				99C8C1DA2D58C5FF00F2A09E /* NetworkLayer */,
 				99C8C1CC2D58B6EF00F2A09E /* Domain */,
 				99C8C1CA2D58B65400F2A09E /* Data */,
 				99C8C0BC2D5811ED00F2A09E /* WeatherApp */,
@@ -146,6 +150,7 @@
 			packageProductDependencies = (
 				99C8C1D62D58C1C200F2A09E /* Data */,
 				99C8C1D82D58C1C900F2A09E /* Domain */,
+				99C8C1DB2D58C60800F2A09E /* NetworkLayer */,
 			);
 			productName = WeatherApp;
 			productReference = 99C8C0BA2D5811ED00F2A09E /* WeatherApp.app */;
@@ -603,6 +608,10 @@
 		99C8C1D82D58C1C900F2A09E /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
+		};
+		99C8C1DB2D58C60800F2A09E /* NetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkLayer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
