@@ -13,6 +13,7 @@ final class HomeViewModel: ObservableObject {
 
     private var useCase: GetWeatherUseCase
     private let locationManager = DefaultLocationManager()
+    var weatherItemPresentationModel: WeatherItemPresentationModel?
     
     @Published var locationDenied = false
 
@@ -37,17 +38,22 @@ extension HomeViewModel {
         Task(priority: .background) {
             
             do {
-                let items = try await useCase.execute(
+                let item = try await useCase.execute(
                     latitude: location.latitude.description,
                     longitude: location.longitude.description
                 )
                 
-                print("DEBUG: items \(items)")
-                
+                weatherItemPresentationModel = WeatherItemPresentationModel(model: item)
+                await reloadView()
             } catch _ {
                 //                        await handleResponseError(error)
             }
         }
+    }
+    
+    @MainActor
+    private func reloadView() {
+        objectWillChange.send()
     }
 }
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		99C8C1D72D58C1C200F2A09E /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D62D58C1C200F2A09E /* Data */; };
 		99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D82D58C1C900F2A09E /* Domain */; };
+		99C8C2BF2D58F90300F2A09E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C2BE2D58F90300F2A09E /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99C8C2BF2D58F90300F2A09E /* Kingfisher in Frameworks */,
 				99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */,
 				99C8C1D72D58C1C200F2A09E /* Data in Frameworks */,
 			);
@@ -148,6 +150,7 @@
 			packageProductDependencies = (
 				99C8C1D62D58C1C200F2A09E /* Data */,
 				99C8C1D82D58C1C900F2A09E /* Domain */,
+				99C8C2BE2D58F90300F2A09E /* Kingfisher */,
 			);
 			productName = WeatherApp;
 			productReference = 99C8C0BA2D5811ED00F2A09E /* WeatherApp.app */;
@@ -231,6 +234,9 @@
 			);
 			mainGroup = 99C8C0B12D5811ED00F2A09E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				99C8C2BD2D58F90300F2A09E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 99C8C0BB2D5811ED00F2A09E /* Products */;
 			projectDirPath = "";
@@ -603,6 +609,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		99C8C2BD2D58F90300F2A09E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		99C8C1D62D58C1C200F2A09E /* Data */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -611,6 +628,11 @@
 		99C8C1D82D58C1C900F2A09E /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
+		};
+		99C8C2BE2D58F90300F2A09E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99C8C2BD2D58F90300F2A09E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -17,5 +17,8 @@ public struct Constants {
         
         /// The key used to retrieve the API key from the Info.plist file.
         static let apiKey = "apiKey"
+        
+        /// The key used to retrieve the image URL from the Info.plist file.
+        static let imageURL = "imageURL"
     }
 }
