@@ -13,12 +13,7 @@ struct TabbarView: View {
     
     init() {
         factory = DefaultWeatherFactory()
-        
-        let appearance = UITabBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
+        CustomTabbar.setupAppearance()
     }
     
     var body: some View {
