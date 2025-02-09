@@ -16,8 +16,8 @@ public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
     private let networkService: NetworkService
 
     // MARK: - Life cycle
-    public init(baseURL: String, apiKey: String) {
-        self.networkService = NetworkService(baseURL: baseURL, apiKey: apiKey)
+    public init(networkService: NetworkService) {
+        self.networkService = networkService
     }
     
     public func fetchCurrentWeather(

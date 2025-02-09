@@ -6,5 +6,7 @@
 //
 
 BASE_URL = https:/$()/api.openweathermap.org/data/2.5/weather?
+SEARCH_URL = https:/$()/api.openweathermap.org/geo/1.0/direct?
 IMAGE_URL = https:/$()/openweathermap.org/img/w/
 API_KEY = daac32177cf1c717c43357a045f1654c
+

@@ -9,10 +9,11 @@ import SwiftUI
 
 struct SearchView: View {
 
+    @StateObject var viewModel: SearchViewModel
     @State private var results: [String] = [] // Start with an empty list
-    @State private var cityName: String = ""
     
-    init() {
+    init(viewModel: SearchViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel) // Initialize viewModel
         CustomNavigationBar.setupAppearance()
     }
 
@@ -31,10 +32,10 @@ struct SearchView: View {
                 .background(Color.clear)
             }
             .navigationTitle("Search")
-            .searchable(text: $cityName, prompt: "Search")
-            .onChange(of: cityName) { newValue in
-                //                fetchResults(for: newValue)
-            }
+            .searchable(text: $viewModel.cityName, prompt: "Search")
+//            .onChange(of: cityName) { newValue in
+//                //                fetchResults(for: newValue)
+//            }
         }
     }
 }

@@ -20,14 +20,16 @@ struct TabbarView: View {
         
         ZStack(alignment: .bottom) {
             TabView {
-                HomeView(viewModel: HomeViewModel(
-                    useCase: factory.makeGetWeatherUseCase())
+                HomeView(
+                    viewModel: HomeViewModel(useCase: factory.makeGetWeatherUseCase())
                 )
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
                 
-                SearchView()
+                SearchView(
+                    viewModel: SearchViewModel(useCase: factory.makeSearchWeatherUseCase())
+                )
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }

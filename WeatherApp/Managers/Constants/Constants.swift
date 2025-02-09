@@ -20,5 +20,8 @@ public struct Constants {
         
         /// The key used to retrieve the image URL from the Info.plist file.
         static let imageURL = "imageURL"
+        
+        /// The key used to retrieve the search URL from the Info.plist file.
+        static let searchURL = "SearchURL"
     }
 }
