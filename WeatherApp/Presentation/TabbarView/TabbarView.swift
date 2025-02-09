@@ -26,9 +26,9 @@ struct TabbarView: View {
                         Label("Home", systemImage: "house.fill")
                     }
                 
-                FavouritesView()
+                FavoritesView()
                     .tabItem {
-                        Label("Favourites", systemImage: "heart.fill")
+                        Label("Favorites", systemImage: "heart.fill")
                     }
                 
                 SettingView()

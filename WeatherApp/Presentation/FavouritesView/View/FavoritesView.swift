@@ -1,5 +1,5 @@
 //
-//  FavouritesView.swift
+//  FavoritesView.swift
 //  WeatherApp
 //
 //  Created by Mostafa Mahmoud on 09/02/2025.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct FavouritesView: View {
+struct FavoritesView: View {
 
     var body: some View {
         
         VStack {
-            Text("Favourite")
+            Text("Favorites")
         }
     }
 }
 
 #Preview {
-    FavouritesView()
+    FavoritesView()
 }
