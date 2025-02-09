@@ -12,6 +12,8 @@ import Foundation
 ///
 public class NetworkService {
     
+    public init() { }
+    
     /// Fetches and decodes JSON data from a given URL string.
     ///
     /// - Parameter urlString: The URL string of the API endpoint.

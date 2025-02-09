@@ -8,30 +8,60 @@
 import Foundation
 import CoreLocation
 
-class LocationPermission:NSObject, ObservableObject, CLLocationManagerDelegate {
+/// A protocol that defines the contract for receiving location updates.
+protocol LocationManager: AnyObject {
+    /// Called when the location is successfully updated.
+    /// - Parameter coordinate: The updated location coordinates.
+    func didUpdateLocation(_ coordinate: CLLocationCoordinate2D)
     
-    @Published var authorizationStatus : CLAuthorizationStatus = .notDetermined
+    /// Called when there is an error retrieving the location.
+    /// - Parameter error: The error encountered while fetching the location.
+    func didFailWithError(_ error: Error)
+}
+
+/// A class responsible for managing location updates using `CLLocationManager`.
+/// This class requests location permissions and provides updates via a delegate.
+
+class DefaultLocationManager: NSObject, CLLocationManagerDelegate {
+    
     private let locationManager = CLLocationManager()
-    @Published var coordinates : CLLocationCoordinate2D?
+    weak var delegate: LocationManager?
+    
+    /// Returns the user's last known location, if available.
+    var userLocation: CLLocationCoordinate2D? {
+        locationManager.location?.coordinate
+    }
     
     override init() {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
     }
     
-    func requestLocationPermission()  {
+    /// Requests the user's permission to access their location and attempts to fetch it.
+    ///
+    func requestLocation() {
         locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        authorizationStatus = manager.authorizationStatus
-    }
-    
+    /// Called when new location data is available.
+    /// - Parameters:
+    ///   - manager: The location manager providing the update.
+    ///   - locations: An array of `CLLocation` objects, with the most recent location last.
+    ///
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {return}
-        
-        coordinates = location.coordinate
+        if let location = locations.first {
+            delegate?.didUpdateLocation(location.coordinate)
+        }
+    }
+    
+    /// Called when an error occurs while retrieving location data.
+    /// - Parameters:
+    ///   - manager: The location manager that encountered the error.
+    ///   - error: The error describing what went wrong.
+    ///
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        delegate?.didFailWithError(error)
     }
 }

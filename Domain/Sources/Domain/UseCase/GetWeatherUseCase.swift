@@ -6,7 +6,7 @@
 //
 
 public protocol GetWeatherUseCase {
-    func execute() async throws -> WeatherItem
+    func execute(latitude: String, longitude: String) async throws -> WeatherItem
 }
 
 public final class DefaultGetWeatherUseCase: GetWeatherUseCase {
@@ -20,7 +20,8 @@ public final class DefaultGetWeatherUseCase: GetWeatherUseCase {
     }
 
     // MARK: - Methods
-    public func execute() async throws -> WeatherItem {
-        return try await repository.fetchCurrentWeather(with: "")
+    public func execute(latitude: String, longitude: String) async throws -> WeatherItem {
+        
+        try await repository.fetchCurrentWeather(latitude: latitude, longitude: longitude)
     }
 }

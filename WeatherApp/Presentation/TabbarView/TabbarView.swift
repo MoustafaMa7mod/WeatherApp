@@ -9,7 +9,11 @@ import SwiftUI
 
 struct TabbarView: View {
 
+    let factory: WeatherFactory
+    
     init() {
+        factory = DefaultWeatherFactory()
+        
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .systemGray6
@@ -21,7 +25,7 @@ struct TabbarView: View {
         
         ZStack(alignment: .bottom) {
             TabView {
-                HomeView()
+                HomeView(viewModel: HomeViewModel(useCase: factory.makeGetWeatherUseCase()))
                     .tabItem {
                         Label("Home", systemImage: "house.fill")
                     }
@@ -39,8 +43,4 @@ struct TabbarView: View {
             .ignoresSafeArea()
         }
     }
-}
-
-#Preview {
-    TabbarView()
 }

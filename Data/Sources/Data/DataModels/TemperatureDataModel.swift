@@ -8,7 +8,7 @@
 struct TemperatureDataModel: Codable {
     
     let degree: Double?
-    let humidity: Double?
+    let humidity: Int?
     
     enum CodingKeys: String, CodingKey {
         case degree = "temp"

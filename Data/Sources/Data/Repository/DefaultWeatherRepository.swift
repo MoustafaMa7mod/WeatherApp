@@ -18,8 +18,14 @@ public final class DefaultWeatherRepository: WeatherRepository {
         self.weatherRemoteAPI = weatherRemoteAPI
     }
 
-    public func fetchCurrentWeather(with url: String) async throws -> WeatherItem {
-        let response = try await weatherRemoteAPI.fetchCurrentWeather()
+    public func fetchCurrentWeather(
+        latitude: String,
+        longitude: String
+    ) async throws -> WeatherItem {
+        let response = try await weatherRemoteAPI.fetchCurrentWeather(
+            latitude: latitude,
+            longitude: longitude
+        )
       
         return response.toDomain()
     }

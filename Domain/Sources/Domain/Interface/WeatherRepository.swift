@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol WeatherRepository {
-    func fetchCurrentWeather(with url: String) async throws -> WeatherItem
+    func fetchCurrentWeather(latitude: String, longitude: String) async throws -> WeatherItem
 }

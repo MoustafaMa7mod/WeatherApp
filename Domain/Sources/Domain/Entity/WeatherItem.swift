@@ -10,7 +10,7 @@ public struct WeatherItem: Identifiable {
     public let id: Int
     public let cityName: String
     public let temperatureDegree: Double
-    public let humidity: Double
+    public let humidity: Int
     public let windSpeed: Double
     public let weatherCondition: String
     public let icon: String
@@ -19,7 +19,7 @@ public struct WeatherItem: Identifiable {
         id: Int,
         cityName: String,
         temperatureDegree: Double,
-        humidity: Double,
+        humidity: Int,
         windSpeed: Double,
         weatherCondition: String,
         icon: String

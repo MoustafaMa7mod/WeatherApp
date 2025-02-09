@@ -8,7 +8,7 @@
 import NetworkLayer
 
 public protocol WeatherRemoteAPI {
-    func fetchCurrentWeather() async throws -> WeatherDataModel
+    func fetchCurrentWeather(latitude: String, longitude: String) async throws -> WeatherDataModel
 }
 
 public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
@@ -16,12 +16,17 @@ public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
     private let networkService: NetworkService
 
     // MARK: - Life cycle
-    public init(networkService: NetworkService) {
-        self.networkService = networkService
+    public init() {
+        self.networkService = NetworkService()
     }
     
-    public func fetchCurrentWeather() async throws -> WeatherDataModel {
-        let result: WeatherDataModel = try await networkService.fetchData(from: "https://api.example.com/data")
+    public func fetchCurrentWeather(
+        latitude: String,
+        longitude: String
+    ) async throws -> WeatherDataModel {
+        let result: WeatherDataModel = try await networkService.fetchData(
+            from: "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=daac32177cf1c717c43357a045f1654c"
+        )
 
         return result
     }

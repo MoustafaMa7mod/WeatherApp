@@ -12,10 +12,16 @@ public struct WeatherDataModel: Codable {
     
     let id: Int
     let name: String?
-    let weather: WeatherConditionDataModel?
+    let weather: [WeatherConditionDataModel]?
     let windSpeed: WindSpeedDataModel?
     let temperature: TemperatureDataModel?
 
+    enum CodingKeys: String, CodingKey {
+        case temperature = "main"
+        case windSpeed = "wind"
+        case id, name, weather
+    }
+    
     public func toDomain() -> WeatherItem {
         return WeatherItem(
             id: id,
@@ -23,8 +29,8 @@ public struct WeatherDataModel: Codable {
             temperatureDegree: temperature?.degree ?? 0,
             humidity: temperature?.humidity ?? 0,
             windSpeed: windSpeed?.speed ?? 0,
-            weatherCondition: weather?.description ?? "",
-            icon: weather?.icon ?? ""
+            weatherCondition: weather?.first?.description ?? "",
+            icon: weather?.first?.icon ?? ""
         )
     }
 }
