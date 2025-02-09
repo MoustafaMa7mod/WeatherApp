@@ -10,7 +10,7 @@ import Foundation
 /// `NetworkService` is responsible for handling network requests using `URLSession` with async/await.
 /// It provides a generic `fetchData` method that can fetch and decode JSON data into a specified `Decodable` type.
 ///
-class NetworkService {
+public class NetworkService {
     
     /// Fetches and decodes JSON data from a given URL string.
     ///
@@ -18,7 +18,7 @@ class NetworkService {
     /// - Returns: A decoded object of the specified generic type `T` (must conform to `Decodable`).
     /// - Throws: `APIError` in case of an invalid URL, request failure, invalid response, or decoding error.
     /// 
-    func fetchData<T: Decodable>(from urlString: String) async throws -> T {
+    public func fetchData<T: Decodable>(from urlString: String) async throws -> T {
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
         }

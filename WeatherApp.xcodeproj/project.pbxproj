@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		99C8C1D72D58C1C200F2A09E /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D62D58C1C200F2A09E /* Data */; };
 		99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D82D58C1C900F2A09E /* Domain */; };
-		99C8C1DC2D58C60800F2A09E /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1DB2D58C60800F2A09E /* NetworkLayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99C8C1DC2D58C60800F2A09E /* NetworkLayer in Frameworks */,
 				99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */,
 				99C8C1D72D58C1C200F2A09E /* Data in Frameworks */,
 			);
@@ -150,7 +148,6 @@
 			packageProductDependencies = (
 				99C8C1D62D58C1C200F2A09E /* Data */,
 				99C8C1D82D58C1C900F2A09E /* Domain */,
-				99C8C1DB2D58C60800F2A09E /* NetworkLayer */,
 			);
 			productName = WeatherApp;
 			productReference = 99C8C0BA2D5811ED00F2A09E /* WeatherApp.app */;
@@ -444,6 +441,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -474,6 +472,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -608,10 +607,6 @@
 		99C8C1D82D58C1C900F2A09E /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
-		};
-		99C8C1DB2D58C60800F2A09E /* NetworkLayer */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NetworkLayer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
