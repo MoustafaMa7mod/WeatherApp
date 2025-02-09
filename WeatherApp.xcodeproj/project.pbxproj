@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		99C8C1D72D58C1C200F2A09E /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D62D58C1C200F2A09E /* Data */; };
+		99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 99C8C1D82D58C1C900F2A09E /* Domain */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		99C8C0D02D5811EE00F2A09E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -67,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99C8C1D92D58C1C900F2A09E /* Domain in Frameworks */,
+				99C8C1D72D58C1C200F2A09E /* Data in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +102,7 @@
 				99C8C0BC2D5811ED00F2A09E /* WeatherApp */,
 				99C8C0D22D5811EE00F2A09E /* WeatherAppTests */,
 				99C8C0DC2D5811EE00F2A09E /* WeatherAppUITests */,
+				99C8C1D52D58C1C200F2A09E /* Frameworks */,
 				99C8C0BB2D5811ED00F2A09E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -107,6 +115,13 @@
 				99C8C0D92D5811EE00F2A09E /* WeatherAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		99C8C1D52D58C1C200F2A09E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +144,8 @@
 			);
 			name = WeatherApp;
 			packageProductDependencies = (
+				99C8C1D62D58C1C200F2A09E /* Data */,
+				99C8C1D82D58C1C900F2A09E /* Domain */,
 			);
 			productName = WeatherApp;
 			productReference = 99C8C0BA2D5811ED00F2A09E /* WeatherApp.app */;
@@ -577,6 +594,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		99C8C1D62D58C1C200F2A09E /* Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Data;
+		};
+		99C8C1D82D58C1C900F2A09E /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 99C8C0B22D5811ED00F2A09E /* Project object */;
 }
