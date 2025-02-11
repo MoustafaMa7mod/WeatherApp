@@ -24,4 +24,10 @@ public struct Constants {
         /// The key used to retrieve the search URL from the Info.plist file.
         static let searchURL = "SearchURL"
     }
+    
+    /// A nested struct containing keys for storing and retrieving values from `UserDefaults`.
+    public struct UserDefaultsKeys {
+        /// The key used to store and retrieve the user's preferred temperature unit.
+        static let celsiusKey = "celsiusKey"
+    }
 }

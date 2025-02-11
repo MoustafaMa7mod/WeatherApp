@@ -11,6 +11,8 @@ final class WeatherComponentViewModel: ObservableObject {
 
     // MARK: - Properties
     private var useCase: GetWeatherUseCase
+    private var latitude: String
+    private var longitude: String
     var delegate: WeatherComponentViewModelDelegate?
     var weatherItemPresentationModel: WeatherItemPresentationModel?
     
@@ -25,8 +27,14 @@ final class WeatherComponentViewModel: ObservableObject {
     ) {
         self.useCase = useCase
         self.delegate = delegate
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
+    func onAppear() {
         fetchWeatherInfo(latitude: latitude, longitude: longitude)
     }
+    
 }
 
 // MARK: - Fetch data request

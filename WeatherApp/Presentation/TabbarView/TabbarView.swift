@@ -47,7 +47,7 @@ struct TabbarView: View {
                     Label("Favorites", systemImage: "heart.fill")
                 }
                 
-                SettingView()
+                SettingView(viewModel: SettingViewModel())
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }

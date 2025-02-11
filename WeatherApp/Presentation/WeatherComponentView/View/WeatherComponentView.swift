@@ -24,6 +24,9 @@ struct WeatherComponentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBlue)
         .ignoresSafeArea()
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
     
     @ViewBuilder

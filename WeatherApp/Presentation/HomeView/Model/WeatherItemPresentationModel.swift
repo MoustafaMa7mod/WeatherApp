@@ -32,7 +32,7 @@ struct WeatherItemPresentationModel: Identifiable {
     }
     
     var temperatureDegree: String {
-        "\(temperature.getTemperature())°"
+        "\(temperature.getTemperature())"
     }
 
     init(model: WeatherItem) {
