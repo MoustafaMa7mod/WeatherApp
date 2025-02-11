@@ -22,44 +22,48 @@ struct SearchView: View {
     var body: some View {
         
         NavigationView {
-
+            
             ZStack {
                 Color
                     .appBlue
                     .ignoresSafeArea()
                 
-                List(viewModel.items, id: \.id) { item in
-                    HStack(alignment: .center, spacing: 4) {
-                        Text(item.countryName)
-                            .font(.system(size: 18))
+                ScrollView(.vertical, showsIndicators: false) {
+                    
+                    ForEach(viewModel.items, id: \.id) { item in
                         
-                        Spacer()
-                        
-                        Image(systemName: "info.circle")
-                            .foregroundColor(.white)
+                        HStack(alignment: .center, spacing: 4) {
+                            Text(item.countryName)
+                                .foregroundColor(Color.black)
+                                .font(.system(size: 18))
+                            
+                            Spacer()
+                            
+                            Image(systemName: "info.circle")
+                                .foregroundColor(Color.darkAppBlue)
+                        }
+                        .padding(8)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .onTapGesture {
+                            selectedItem = item
+                            isNavigating = true
+                        }
                     }
-                    .onTapGesture {
-                        selectedItem = item
-                        isNavigating = true
-                    }
-                    .listRowBackground(Color.darkAppBlue)
                 }
-                .padding(.top, 4)
-                .scrollContentBackground(.hidden)
-                .background(.clear)
-
+                .padding(12)
+                .navigationTitle("Search")
+                .searchable(text: $viewModel.cityName, prompt: "Search")
+                .background(
+                    NavigationLink(
+                        destination: destinationView(),
+                        isActive: $isNavigating
+                    ) {
+                        EmptyView()
+                    }
+                    .hidden()
+                )
             }
-            .navigationTitle("Search")
-            .searchable(text: $viewModel.cityName, prompt: "Search")
-            .background(
-                NavigationLink(
-                    destination: destinationView(),
-                    isActive: $isNavigating
-                ) {
-                    EmptyView()
-                }
-                .hidden()
-            )
         }
     }
     

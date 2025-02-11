@@ -38,10 +38,14 @@ struct TabbarView: View {
                     Label("Search", systemImage: "magnifyingglass")
                 }
                 
-                FavoritesView()
-                    .tabItem {
-                        Label("Favorites", systemImage: "heart.fill")
-                    }
+                FavoritesView(
+                    viewModel: FavoritesViewModel(
+                        useCase: factory.makeFavoritesCityLocalUseCase()
+                    )
+                )
+                .tabItem {
+                    Label("Favorites", systemImage: "heart.fill")
+                }
                 
                 SettingView()
                     .tabItem {

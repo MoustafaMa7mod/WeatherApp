@@ -66,6 +66,7 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
             entity.cityName = item.cityName
             entity.humidity = Int16(item.humidity)
             entity.icon = item.icon
+            entity.weatherCondition = item.weatherCondition
             entity.temperatureDegree = item.temperatureDegree
             entity.windSpeed = item.windSpeed
 

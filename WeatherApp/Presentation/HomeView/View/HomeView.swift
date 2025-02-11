@@ -13,12 +13,15 @@ struct HomeView: View {
     
     var body: some View {
         
-        VStack(alignment: .center, spacing: 0) {
-            content
+        NavigationView {
+            
+            VStack(alignment: .center, spacing: 0) {
+                content
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.appBlue)
+            .navigationTitle("Home")
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.appBlue)
-        .ignoresSafeArea()
     }
     
     @ViewBuilder

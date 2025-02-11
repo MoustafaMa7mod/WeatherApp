@@ -128,7 +128,7 @@ extension WeatherDetailsViewModel {
     ///
     /// This function calls `favoritesCityLocalUseCase.removeCityFavorites(id:)` to remove the city
     /// from the local database. If an error occurs, it logs the error and returns `false`.
-    private func removeCityFromFavorites(id: Int) async -> Bool{
+    private func removeCityFromFavorites(id: Int) async -> Bool {
         do {
             return try await favoritesCityLocalUseCase.removeCityFavorites(id: id)
         } catch {
