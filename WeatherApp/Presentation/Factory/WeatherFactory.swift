@@ -26,5 +26,4 @@ protocol WeatherFactory {
     ///
     /// - Returns: A `FavoritesCityLocalUseCase` instance.
     func makeFavoritesCityLocalUseCase() -> FavoritesCityLocalUseCase
-
 }

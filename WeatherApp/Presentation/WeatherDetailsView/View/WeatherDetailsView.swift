@@ -40,7 +40,7 @@ struct WeatherDetailsView: View {
                 Button(action: {
                     viewModel.addCityToFavoritesTapped()
                 }) {
-                    Image("unfavorite")
+                    Image(viewModel.isFavorite ? "favorite" : "unfavorite")
                         .resizable()
                         .scaledToFit()
                         .tint(.white)

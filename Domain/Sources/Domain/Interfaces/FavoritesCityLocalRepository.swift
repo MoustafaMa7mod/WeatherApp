@@ -7,7 +7,7 @@
 
 public protocol FavoritesCityLocalRepository {
     func fetchFavoritesCities() async -> [WeatherItem]
-    func save(item: WeatherItem) async
-    func clear() async
+    func save(item: WeatherItem) async -> Bool
+    func clear(id: Int) async -> Bool
 }
 

@@ -8,7 +8,7 @@
 import Domain
 import Foundation
 
-struct CountryItemPresentationModel: Identifiable {
+struct CountryItemPresentationModel: Identifiable, Hashable {
  
     let id: UUID
     let countryName: String

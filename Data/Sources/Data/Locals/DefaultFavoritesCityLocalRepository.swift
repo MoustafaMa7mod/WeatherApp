@@ -56,11 +56,11 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
     ///
     /// - Throws: A fatal error if the save operation fails.
     ///
-    public func save(item: WeatherItem) async {
+    public func save(item: WeatherItem) async -> Bool {
         
         let context = persistenceController.container.newBackgroundContext()
         
-        await context.perform {
+        return await context.perform {
             let entity = WeatherCityEntity(context: context)
             entity.id = Int64(item.id)
             entity.cityName = item.cityName
@@ -72,6 +72,7 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
             do {
                 try context.save()
                 Logger().info("item saved")
+                return true
             } catch {
                 fatalError("""
                            Error save Core Data:
@@ -92,20 +93,22 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
     ///   - `"Cleared all saved items"` if the deletion is successful.
     ///   - `"Failed to clear items: <error>"` if an error occurs.
 
-    public func clear() async {
+    public func clear(id: Int) async -> Bool {
         
         let context = persistenceController.container.newBackgroundContext()
         
-        await context.perform {
+        return await context.perform {
             let fetchRequest = WeatherCityEntity.fetchRequest()
-            
+            fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+
             do {
                 let objects = try context.fetch(fetchRequest)
                 for object in objects {
                     context.delete(object)
                 }
                 try context.save()
-                Logger().info("Cleared all saved items")
+                Logger().info("Deleted \(objects.count) item(s) named \(id)")
+                return true
             } catch {
                 fatalError("""
                            Error clear Core Data:

@@ -11,18 +11,20 @@ final class WeatherComponentViewModel: ObservableObject {
 
     // MARK: - Properties
     private var useCase: GetWeatherUseCase
-
+    var delegate: WeatherComponentViewModelDelegate?
     var weatherItemPresentationModel: WeatherItemPresentationModel?
-    var weatherItem: WeatherItem?
+    
+    @Published var weatherItem: WeatherItem?
     
     // MARK: - Methods
     init(
         useCase: GetWeatherUseCase,
+        delegate: WeatherComponentViewModelDelegate? = nil,
         latitude: String,
         longitude: String
     ) {
         self.useCase = useCase
-        
+        self.delegate = delegate
         fetchWeatherInfo(latitude: latitude, longitude: longitude)
     }
 }
@@ -40,15 +42,14 @@ extension WeatherComponentViewModel {
         Task(priority: .background) {
             
             do {
-                weatherItem = try await useCase.execute(
+                let item = try await useCase.execute(
                     latitude: latitude,
                     longitude: longitude
                 )
-                
-                if let weatherItem {
-                    weatherItemPresentationModel = WeatherItemPresentationModel(model: weatherItem)
-                }
-                
+                weatherItemPresentationModel = WeatherItemPresentationModel(
+                    model: item
+                )
+                delegate?.weatherItem = item
                 await reloadView()
             } catch _ {
                 //                        await handleResponseError(error)

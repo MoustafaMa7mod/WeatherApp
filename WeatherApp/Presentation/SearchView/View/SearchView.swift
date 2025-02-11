@@ -9,51 +9,71 @@ import SwiftUI
 
 struct SearchView: View {
 
+    @State private var selectedItem: CountryItemPresentationModel?
+    @State private var isNavigating = false
+
     @StateObject var viewModel: SearchViewModel
     
     init(viewModel: SearchViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel) // Initialize viewModel
+        _viewModel = StateObject(wrappedValue: viewModel)
         CustomNavigationBar.setupAppearance()
     }
 
     var body: some View {
         
         NavigationView {
-            
+
             ZStack {
                 Color
                     .appBlue
                     .ignoresSafeArea()
                 
                 List(viewModel.items, id: \.id) { item in
-                    let weatherDetailsViewModel = viewModel.initialViewModel(
-                        latitude: "\(item.latitude)",
-                        longitude: "\(item.longitude )")
-                    
-                    NavigationLink(
-                        destination: WeatherDetailsView(
-                            viewModel: weatherDetailsViewModel
-                        )
-                    ) {
-                        HStack(alignment: .center, spacing: 4) {
-                            Text(item.countryName)
-                                .font(.system(size: 18))
-                            
-                            Spacer()
-                            
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.white)
-                        }
+                    HStack(alignment: .center, spacing: 4) {
+                        Text(item.countryName)
+                            .font(.system(size: 18))
                         
+                        Spacer()
+                        
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.white)
+                    }
+                    .onTapGesture {
+                        selectedItem = item
+                        isNavigating = true
                     }
                     .listRowBackground(Color.darkAppBlue)
                 }
                 .padding(.top, 4)
                 .scrollContentBackground(.hidden)
                 .background(.clear)
+
             }
             .navigationTitle("Search")
             .searchable(text: $viewModel.cityName, prompt: "Search")
+            .background(
+                NavigationLink(
+                    destination: destinationView(),
+                    isActive: $isNavigating
+                ) {
+                    EmptyView()
+                }
+                .hidden()
+            )
+        }
+    }
+    
+    @ViewBuilder
+    private func destinationView() -> some View {
+        if let selectedItem {
+            let weatherDetailsViewModel = viewModel.initialViewModel(
+                latitude: "\(selectedItem.latitude)",
+                longitude: "\(selectedItem.longitude )"
+            )
+            
+            WeatherDetailsView(viewModel: weatherDetailsViewModel)
+        } else {
+            EmptyView()
         }
     }
 }
