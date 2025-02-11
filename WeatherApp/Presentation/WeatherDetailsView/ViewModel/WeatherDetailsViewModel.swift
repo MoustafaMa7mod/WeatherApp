@@ -15,6 +15,8 @@ final class WeatherDetailsViewModel: ObservableObject {
     // MARK: - Properties
     private var getWeatherUseCase: GetWeatherUseCase
     private var favoritesCityLocalUseCase: FavoritesCityLocalUseCase
+    private var cityID: Int?
+    private var cityName: String
     private var cancellable = Set<AnyCancellable>()
     var isFavorite: Bool = false
     var weatherComponentViewModel: WeatherComponentViewModel?
@@ -24,10 +26,13 @@ final class WeatherDetailsViewModel: ObservableObject {
     init(
         getWeatherUseCase: GetWeatherUseCase,
         favoritesCityLocalUseCase: FavoritesCityLocalUseCase,
-        cityName: String
+        cityName: String,
+        cityID: Int
     ) {
         self.getWeatherUseCase = getWeatherUseCase
         self.favoritesCityLocalUseCase = favoritesCityLocalUseCase
+        self.cityName = cityName
+        self.cityID = cityID
         
         initialViewModel(cityName: cityName)
         observeWeatherItemChanges()
@@ -39,17 +44,17 @@ final class WeatherDetailsViewModel: ObservableObject {
     /// of favorite cities is fetched.
     func addCityToFavoritesTapped() {
         
-        guard let weatherItem = weatherItem else { return }
+        guard let weatherItem, let cityID else { return }
         
         Task(priority: .background) {
             
-//            isFavorite = await isCityInFavorites(id: weatherItem.id)
-//            
-//            guard !isFavorite else {
-//                isFavorite = !(await removeCityFromFavorites(id: weatherItem.id))
-//                await reloadView()
-//                return
-//            }
+            isFavorite = await isCityInFavorites(id: cityID)
+            
+            guard !isFavorite else {
+                isFavorite = !(await removeCityFromFavorites(id: cityID))
+                await reloadView()
+                return
+            }
             
             isFavorite = await addCityToFavorites(item: weatherItem)
             await reloadView()
@@ -96,9 +101,9 @@ extension WeatherDetailsViewModel {
             .$weatherItem
             .compactMap { $0 } // Ensures we only get non-nil values
             .sink { [weak self] item in
-                guard let self else { return }
-//                self.weatherItem = item
-//                self.checkCityInFavorites(id: item.id)
+                guard let self, let cityID else { return }
+                self.weatherItem = item
+                self.checkCityInFavorites(id: cityID)
             }
             .store(in: &cancellable)
     }
@@ -108,7 +113,11 @@ extension WeatherDetailsViewModel {
     /// - Parameter item: The `WeatherItem` to be added.
     private func addCityToFavorites(item: WeatherItem) async -> Bool {
         do {
-            return try await favoritesCityLocalUseCase.addCityToFavorites(item: item)
+            return try await favoritesCityLocalUseCase.addCityToFavorites(
+                item: item,
+                cityName: cityName,
+                cityID: cityID ?? 0
+            )
         } catch {
             Logger().error("Failed to add city to favorites: \(error.localizedDescription)")
             return false
@@ -138,7 +147,7 @@ extension WeatherDetailsViewModel {
     private func isCityInFavorites(id: Int) async -> Bool {
         do {
             let result = try await favoritesCityLocalUseCase.fetchFavoritesCities()
-            return true
+            return result.contains{ $0.cityID == cityID }
         } catch {
             Logger().error("Failed to fetch favorite cities: \(error.localizedDescription)")
             return false

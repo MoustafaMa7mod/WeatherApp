@@ -34,16 +34,16 @@ public struct WeatherDataModel: Codable {
 /// Maps the object from `WeatherInfoEntity` to `WeatherItem` .
 extension WeatherInfoEntity {
     
-    func toDTO() -> WeatherItem? {
-        nil
-//        WeatherItem(
-//            id: id,
-//            cityName: cityName ?? "",
-//            temperatureCelsiusDegree: temperatureDegree,
-//            humidity: Int(humidity),
-//            windSpeed: windSpeed,
-//            weatherCondition: weatherCondition ?? "",
-//            icon: icon ?? ""
-//        )
+    func toDTO() -> WeatherItem {
+        WeatherItem(
+            cityID: Int(city?.id ?? 0),
+            cityName: city?.name,
+            temperatureCelsiusDegree: temperatureCelsiusDegree,
+            temperatureFahrenheitDegree: temperatureCelsiusDegree,
+            humidity: Int(humidity),
+            windSpeed: windSpeed,
+            weatherCondition: weatherCondition ?? "",
+            icon: icon ?? ""
+        )
     }
 }

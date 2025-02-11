@@ -19,7 +19,8 @@ struct WeatherItemPresentationModel: Identifiable {
     let id: UUID
     let weatherCondition: String
     let cityName: String
-    
+    let cityID: Int
+
     var weatherIcon: URL? {
         URL(string: "https:\(icon)")
     }
@@ -45,7 +46,8 @@ struct WeatherItemPresentationModel: Identifiable {
     init(model: WeatherItem) {
         
         self.id = UUID()
-        self.cityName = model.cityName
+        self.cityName = model.cityName ?? ""
+        self.cityID = model.cityID ?? 0
         self.temperatureCelsiusDegree = model.temperatureCelsiusDegree
         self.temperatureFahrenheitDegree = model.temperatureFahrenheitDegree
         self.humidity = model.humidity

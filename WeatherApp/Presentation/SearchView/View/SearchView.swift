@@ -71,7 +71,8 @@ struct SearchView: View {
     private func destinationView() -> some View {
         if let selectedItem {
             let weatherDetailsViewModel = viewModel.initialViewModel(
-                cityName: "\(selectedItem.cityName)"
+                cityName: "\(selectedItem.cityName)",
+                cityID: selectedItem.id
             )
             
             WeatherDetailsView(viewModel: weatherDetailsViewModel)

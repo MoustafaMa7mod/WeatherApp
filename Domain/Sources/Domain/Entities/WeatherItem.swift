@@ -9,7 +9,8 @@ import Foundation
 
 public struct WeatherItem {
     
-    public let cityName: String
+    public let cityID: Int?
+    public let cityName: String?
     public let temperatureCelsiusDegree: Double
     public let temperatureFahrenheitDegree: Double
     public let humidity: Int
@@ -18,7 +19,8 @@ public struct WeatherItem {
     public let icon: String
 
     public init(
-        cityName: String,
+        cityID: Int? = nil,
+        cityName: String? = nil,
         temperatureCelsiusDegree: Double,
         temperatureFahrenheitDegree: Double,
         humidity: Int,
@@ -26,6 +28,7 @@ public struct WeatherItem {
         weatherCondition: String,
         icon: String
     ) {
+        self.cityID = cityID
         self.cityName = cityName
         self.temperatureCelsiusDegree = temperatureCelsiusDegree
         self.temperatureFahrenheitDegree = temperatureFahrenheitDegree

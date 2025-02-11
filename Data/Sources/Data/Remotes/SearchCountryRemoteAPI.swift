@@ -41,7 +41,7 @@ public final class DefaultSearchCountryRemoteAPI: SearchCountryRemoteAPI {
         /// - `"q=\(name)"`: Specifies the search query parameter where `name` is the user-provided country name or partial name.
         let result: [CityDataModel] = try await networkService.fetchData(
             urlString: "search.json?",
-            query: "search.json?q=\(name)"
+            query: "q=\(name)"
         )
 
         return result

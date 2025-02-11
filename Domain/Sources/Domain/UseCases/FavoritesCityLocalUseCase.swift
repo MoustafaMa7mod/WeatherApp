@@ -8,7 +8,11 @@
 public protocol FavoritesCityLocalUseCase {
     
     func fetchFavoritesCities() async throws -> [WeatherItem]
-    func addCityToFavorites(item: WeatherItem) async throws -> Bool
+    func addCityToFavorites(
+        item: WeatherItem,
+        cityName: String,
+        cityID: Int
+    ) async throws -> Bool
     func removeCityFavorites(id: Int) async throws -> Bool
 }
 
@@ -24,11 +28,15 @@ public final class DefaultFavoritesCityLocalUseCase: FavoritesCityLocalUseCase {
         await local.fetchFavoritesCities()
     }
     
-    public func addCityToFavorites(item: WeatherItem) async throws -> Bool {
-        await local.save(item: item)
+    public func addCityToFavorites(
+        item: WeatherItem,
+        cityName: String,
+        cityID: Int
+    ) async throws -> Bool {
+        await local.save(item: item, cityName: cityName, cityID: cityID)
     }
     
     public func removeCityFavorites(id: Int) async throws -> Bool {
-        await local.clear(id: id)
+        await local.deleteItem(id: id)
     }
 }

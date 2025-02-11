@@ -35,19 +35,22 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
     public func fetchFavoritesCities() async -> [WeatherItem] {
         let context = persistenceController.container.newBackgroundContext()
 
-        return []
-//        return await context.perform {
-//            let fetchRequest: NSFetchRequest<WeatherInfoEntity> = WeatherInfoEntity.fetchRequest()
-//            do {
-//                let results = try context
-//                    .fetch(fetchRequest)
-//                    .map({ $0.toDTO() })
-//                return results
-//            } catch {
-//                Logger().error("Failed to fetch weather items: \(error.localizedDescription)")
-//                return []
-//            }
-//        }
+        return await context.perform {
+            let fetchRequest: NSFetchRequest<WeatherInfoEntity> = WeatherInfoEntity.fetchRequest()
+            
+            // Ensure related CityEntity is fetched
+            fetchRequest.relationshipKeyPathsForPrefetching = ["city"]
+
+            do {
+                let results = try context
+                    .fetch(fetchRequest)
+                    .map({ $0.toDTO() })
+                return results
+            } catch {
+                Logger().error("Failed to fetch weather items: \(error.localizedDescription)")
+                return []
+            }
+        }
     }
 
     /// Saves the current state of the Core Data context.
@@ -57,14 +60,18 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
     ///
     /// - Throws: A fatal error if the save operation fails.
     ///
-    public func save(item: WeatherItem) async -> Bool {
+    public func save(
+        item: WeatherItem,
+        cityName: String,
+        cityID: Int
+    ) async -> Bool {
         
         let context = persistenceController.container.newBackgroundContext()
         
         return await context.perform {
             let city = CityEntity(context: context)
-//            city.id = city.id
-//            city.name = city.name
+            city.id = Int64(cityID)
+            city.name = cityName
 
             let entity = WeatherInfoEntity(context: context)
             entity.humidity = Int16(item.humidity)
@@ -73,6 +80,7 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
             entity.temperatureCelsiusDegree = item.temperatureCelsiusDegree
             entity.temperatureFahrenheitDegree = item.temperatureFahrenheitDegree
             entity.windSpeed = item.windSpeed
+            entity.city = city
             
             do {
                 try context.save()
@@ -98,21 +106,33 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
     ///   - `"Cleared all saved items"` if the deletion is successful.
     ///   - `"Failed to clear items: <error>"` if an error occurs.
 
-    public func clear(id: Int) async -> Bool {
+    public func deleteItem(id: Int) async -> Bool {
         
         let context = persistenceController.container.newBackgroundContext()
-        
-        return await context.perform {
-            let fetchRequest = WeatherInfoEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %d", id)
 
+        return await context.perform {
+            
+            let weatherRequest: NSFetchRequest<WeatherInfoEntity> = WeatherInfoEntity.fetchRequest()
+            weatherRequest.predicate = NSPredicate(format: "city.id == %d", id)
+            
             do {
-                let objects = try context.fetch(fetchRequest)
-                for object in objects {
-                    context.delete(object)
+                let weatherRecords = try context.fetch(weatherRequest)
+
+                // Delete all related WeatherInfoEntity records
+                for weather in weatherRecords {
+                    context.delete(weather)
                 }
+
+                let cityRequest: NSFetchRequest<CityEntity> = CityEntity.fetchRequest()
+                cityRequest.predicate = NSPredicate(format: "id == %d", id)
+
+                if let city = try context.fetch(cityRequest).first {
+                    context.delete(city)
+                }
+
                 try context.save()
-                Logger().info("Deleted \(objects.count) item(s) named \(id)")
+                
+                Logger().info("item deleted")
                 return true
             } catch {
                 fatalError("""
