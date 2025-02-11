@@ -10,47 +10,40 @@ import Domain
 
 public struct WeatherDataModel: Codable {
     
-    let id: Int
-    let name: String?
-    let weather: [WeatherConditionDataModel]?
-    let windSpeed: WindSpeedDataModel?
-    let temperature: TemperatureDataModel?
-    let coordinate: CoordinateDataModel?
+    let location: LocationDataModel?
+    let currentWeatherInfo: CurrentWeatherDataModel?
 
     enum CodingKeys: String, CodingKey {
-        case temperature = "main"
-        case windSpeed = "wind"
-        case coordinate = "coord"
-        case id, name, weather
+        case currentWeatherInfo = "current"
+        case location
     }
     
     public func toDomain() -> WeatherItem {
         WeatherItem(
-            id: id,
-            cityName: name ?? "",
-            temperatureDegree: temperature?.degree ?? 0,
-            humidity: temperature?.humidity ?? 0,
-            windSpeed: windSpeed?.speed ?? 0,
-            weatherCondition: weather?.first?.description ?? "",
-            icon: weather?.first?.icon ?? "",
-            latitude: coordinate?.latitude ?? 0,
-            longitude: coordinate?.longitude ?? 0
+            cityName: location?.name ?? "",
+            temperatureCelsiusDegree: currentWeatherInfo?.tempCelsius ?? 0,
+            temperatureFahrenheitDegree: currentWeatherInfo?.tempFahrenheit ?? 0,
+            humidity: currentWeatherInfo?.humidity ?? 0,
+            windSpeed: currentWeatherInfo?.windSpeed ?? 0,
+            weatherCondition: currentWeatherInfo?.condition?.description ?? "",
+            icon: currentWeatherInfo?.condition?.icon ?? ""
         )
     }
 }
 
-/// Maps the object from `WeatherCityEntity` to `WeatherItem` .
-extension WeatherCityEntity {
+/// Maps the object from `WeatherInfoEntity` to `WeatherItem` .
+extension WeatherInfoEntity {
     
-    func toDTO() -> WeatherItem {
-        WeatherItem(
-            id: Int(id),
-            cityName: cityName ?? "",
-            temperatureDegree: temperatureDegree,
-            humidity: Int(humidity),
-            windSpeed: windSpeed,
-            weatherCondition: weatherCondition ?? "",
-            icon: icon ?? ""
-        )
+    func toDTO() -> WeatherItem? {
+        nil
+//        WeatherItem(
+//            id: id,
+//            cityName: cityName ?? "",
+//            temperatureCelsiusDegree: temperatureDegree,
+//            humidity: Int(humidity),
+//            windSpeed: windSpeed,
+//            weatherCondition: weatherCondition ?? "",
+//            icon: icon ?? ""
+//        )
     }
 }

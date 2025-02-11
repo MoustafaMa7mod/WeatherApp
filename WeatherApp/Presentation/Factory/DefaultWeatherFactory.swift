@@ -50,14 +50,14 @@ extension DefaultWeatherFactory {
     /// - Returns: A `DefaultWeatherRemoteAPI` instance.
     private func makeWeatherRemoteAPI() -> WeatherRemoteAPI {
         DefaultWeatherRemoteAPI(
-            networkService: makeWeatherNetworkService()
+            networkService: makeNetworkService()
         )
     }
     
     /// Creates and returns an instance of `NetworkService` for weather-related API calls.
     ///
     /// - Returns: A `NetworkService` instance configured with the base URL and API key.
-    private func makeWeatherNetworkService() -> NetworkService {
+    private func makeNetworkService() -> NetworkService {
         NetworkService(
             baseURL: ConfigurationManager.shared.baseUrl,
             apiKey: ConfigurationManager.shared.apiKey
@@ -82,17 +82,7 @@ extension DefaultWeatherFactory {
     /// - Returns: A `DefaultSearchCountryRemoteAPI` instance.
     private func makeSearchWeatherRemoteAPI() -> SearchCountryRemoteAPI {
         DefaultSearchCountryRemoteAPI(
-            networkService: makeSearchWeatherNetworkService()
-        )
-    }
-    
-    /// Creates and returns an instance of `NetworkService` for country search API calls.
-    ///
-    /// - Returns: A `NetworkService` instance configured with the search API base URL and API key.
-    private func makeSearchWeatherNetworkService() -> NetworkService {
-        NetworkService(
-            baseURL: ConfigurationManager.shared.searchUrl,
-            apiKey: ConfigurationManager.shared.apiKey
+            networkService: makeNetworkService()
         )
     }
 }

@@ -24,13 +24,12 @@ final class WeatherDetailsViewModel: ObservableObject {
     init(
         getWeatherUseCase: GetWeatherUseCase,
         favoritesCityLocalUseCase: FavoritesCityLocalUseCase,
-        latitude: String,
-        longitude: String
+        cityName: String
     ) {
         self.getWeatherUseCase = getWeatherUseCase
         self.favoritesCityLocalUseCase = favoritesCityLocalUseCase
         
-        initialViewModel(latitude: latitude, longitude: longitude)
+        initialViewModel(cityName: cityName)
         observeWeatherItemChanges()
     }
     
@@ -44,13 +43,13 @@ final class WeatherDetailsViewModel: ObservableObject {
         
         Task(priority: .background) {
             
-            isFavorite = await isCityInFavorites(id: weatherItem.id)
-            
-            guard !isFavorite else {
-                isFavorite = !(await removeCityFromFavorites(id: weatherItem.id))
-                await reloadView()
-                return
-            }
+//            isFavorite = await isCityInFavorites(id: weatherItem.id)
+//            
+//            guard !isFavorite else {
+//                isFavorite = !(await removeCityFromFavorites(id: weatherItem.id))
+//                await reloadView()
+//                return
+//            }
             
             isFavorite = await addCityToFavorites(item: weatherItem)
             await reloadView()
@@ -64,18 +63,13 @@ extension WeatherDetailsViewModel {
     /// Initializes the weather component view model with the given location.
     ///
     /// - Parameters:
-    ///   - latitude: The latitude of the location.
-    ///   - longitude: The longitude of the location.
-    private func initialViewModel(
-        latitude: String,
-        longitude: String
-    ) {
+    ///   - cityName: The cityName
+    private func initialViewModel(cityName: String) {
         
         weatherComponentViewModel = WeatherComponentViewModel(
             useCase: getWeatherUseCase,
             delegate: WeatherComponentViewModelDelegate(),
-            latitude: latitude,
-            longitude: longitude
+            cityName: cityName
         )
     }
     
@@ -103,8 +97,8 @@ extension WeatherDetailsViewModel {
             .compactMap { $0 } // Ensures we only get non-nil values
             .sink { [weak self] item in
                 guard let self else { return }
-                self.weatherItem = item
-                self.checkCityInFavorites(id: item.id)
+//                self.weatherItem = item
+//                self.checkCityInFavorites(id: item.id)
             }
             .store(in: &cancellable)
     }
@@ -144,7 +138,7 @@ extension WeatherDetailsViewModel {
     private func isCityInFavorites(id: Int) async -> Bool {
         do {
             let result = try await favoritesCityLocalUseCase.fetchFavoritesCities()
-            return result.contains { $0.id == id }
+            return true
         } catch {
             Logger().error("Failed to fetch favorite cities: \(error.localizedDescription)")
             return false

@@ -43,16 +43,15 @@ final class SearchViewModel: ObservableObject {
     /// Creates and returns a `WeatherDetailsViewModel` for a given latitude and longitude.
     ///
     /// - Parameters:
-    ///   - latitude: The latitude of the location.
+    ///   - cityName: The cityName.
     ///   - longitude: The longitude of the location.
     /// - Returns: An instance of `WeatherDetailsViewModel` configured with the given coordinates.
-    func initialViewModel(latitude: String, longitude: String) -> WeatherDetailsViewModel {
+    func initialViewModel(cityName: String) -> WeatherDetailsViewModel {
         
         WeatherDetailsViewModel(
             getWeatherUseCase: getWeatherUseCase,
             favoritesCityLocalUseCase: favoritesCityLocalUseCase,
-            latitude: latitude,
-            longitude: longitude
+            cityName: cityName
         )
     }
     

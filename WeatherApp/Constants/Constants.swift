@@ -16,13 +16,7 @@ public struct Constants {
         static let baseURL = "baseURL"
         
         /// The key used to retrieve the API key from the Info.plist file.
-        static let apiKey = "apiKey"
-        
-        /// The key used to retrieve the image URL from the Info.plist file.
-        static let imageURL = "imageURL"
-        
-        /// The key used to retrieve the search URL from the Info.plist file.
-        static let searchURL = "SearchURL"
+        static let apiKey = "apiKey"        
     }
     
     /// A nested struct containing keys for storing and retrieving values from `UserDefaults`.

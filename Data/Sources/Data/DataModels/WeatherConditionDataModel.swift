@@ -7,13 +7,11 @@
 
 struct WeatherConditionDataModel: Codable {
     
-    let id: Int
-    let title: String?
     let description: String?
     let icon: String?
 
     enum CodingKeys: String, CodingKey {
-        case title = "main"
-        case id, description, icon
+        case description = "text"
+        case icon
     }
 }

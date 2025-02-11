@@ -13,5 +13,5 @@ public protocol SearchCountryRepository {
     /// - Parameter name: The name or partial name of the country to search for.
     /// - Returns: An array of `CountryItem` objects that match the search query.
     /// - Throws: An error if the search request fails.
-    func searchCountry(name: String) async throws -> [CountryItem]
+    func searchCountry(name: String) async throws -> [CityItem]
 }

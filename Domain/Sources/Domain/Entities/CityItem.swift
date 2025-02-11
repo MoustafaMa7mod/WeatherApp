@@ -1,23 +1,26 @@
 //
-//  CountryItem.swift
+//  CityItem.swift
 //  Domain
 //
 //  Created by Mostafa Mahmoud on 09/02/2025.
 //
 import Foundation
 
-public struct CountryItem {
+public struct CityItem {
     
-    public let countryName: String
+    public let id: Int
+    public let cityName: String
     public let latitude: Double
     public let longitude: Double
 
     public init(
-        countryName: String,
+        id: Int,
+        cityName: String,
         latitude: Double,
         longitude: Double
     ) {
-        self.countryName = countryName
+        self.id = id
+        self.cityName = cityName
         self.latitude = latitude
         self.longitude = longitude
     }

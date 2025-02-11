@@ -33,7 +33,7 @@ struct SearchView: View {
                     ForEach(viewModel.items, id: \.id) { item in
                         
                         HStack(alignment: .center, spacing: 4) {
-                            Text(item.countryName)
+                            Text(item.cityName)
                                 .foregroundColor(Color.black)
                                 .font(.system(size: 18))
                             
@@ -71,8 +71,7 @@ struct SearchView: View {
     private func destinationView() -> some View {
         if let selectedItem {
             let weatherDetailsViewModel = viewModel.initialViewModel(
-                latitude: "\(selectedItem.latitude)",
-                longitude: "\(selectedItem.longitude )"
+                cityName: "\(selectedItem.cityName)"
             )
             
             WeatherDetailsView(viewModel: weatherDetailsViewModel)

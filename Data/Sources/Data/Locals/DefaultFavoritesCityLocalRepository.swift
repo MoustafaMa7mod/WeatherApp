@@ -22,7 +22,7 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
     /// Fetches all favorite cities stored in Core Data and converts them into `WeatherItem` objects.
     ///
     /// This method creates a new background context and performs an asynchronous fetch request
-    /// to retrieve all `WeatherCityEntity` objects from Core Data.
+    /// to retrieve all `WeatherInfoEntity` objects from Core Data.
     ///
     /// - The fetched entities are mapped to their corresponding `WeatherItem` DTOs using `toDTO()`.
     /// - The operation is executed on a background context to avoid blocking the main thread.
@@ -35,18 +35,19 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
     public func fetchFavoritesCities() async -> [WeatherItem] {
         let context = persistenceController.container.newBackgroundContext()
 
-        return await context.perform {
-            let fetchRequest: NSFetchRequest<WeatherCityEntity> = WeatherCityEntity.fetchRequest()
-            do {
-                let results = try context
-                    .fetch(fetchRequest)
-                    .map({ $0.toDTO() })
-                return results
-            } catch {
-                Logger().error("Failed to fetch weather items: \(error.localizedDescription)")
-                return []
-            }
-        }
+        return []
+//        return await context.perform {
+//            let fetchRequest: NSFetchRequest<WeatherInfoEntity> = WeatherInfoEntity.fetchRequest()
+//            do {
+//                let results = try context
+//                    .fetch(fetchRequest)
+//                    .map({ $0.toDTO() })
+//                return results
+//            } catch {
+//                Logger().error("Failed to fetch weather items: \(error.localizedDescription)")
+//                return []
+//            }
+//        }
     }
 
     /// Saves the current state of the Core Data context.
@@ -61,15 +62,18 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
         let context = persistenceController.container.newBackgroundContext()
         
         return await context.perform {
-            let entity = WeatherCityEntity(context: context)
-            entity.id = Int64(item.id)
-            entity.cityName = item.cityName
+            let city = CityEntity(context: context)
+//            city.id = city.id
+//            city.name = city.name
+
+            let entity = WeatherInfoEntity(context: context)
             entity.humidity = Int16(item.humidity)
             entity.icon = item.icon
             entity.weatherCondition = item.weatherCondition
-            entity.temperatureDegree = item.temperatureDegree
+            entity.temperatureCelsiusDegree = item.temperatureCelsiusDegree
+            entity.temperatureFahrenheitDegree = item.temperatureFahrenheitDegree
             entity.windSpeed = item.windSpeed
-
+            
             do {
                 try context.save()
                 Logger().info("item saved")
@@ -83,9 +87,9 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
         }
     }
     
-    /// Deletes all stored `WeatherCityEntity` objects from Core Data.
+    /// Deletes all stored `WeatherInfoEntity` objects from Core Data.
     ///
-    /// This method creates a new background context, fetches all stored `WeatherCityEntity` objects,
+    /// This method creates a new background context, fetches all stored `WeatherInfoEntity` objects,
     /// deletes them, and saves the changes to ensure they are permanently removed.
     ///
     /// The operation is performed asynchronously to avoid blocking the main thread.
@@ -99,7 +103,7 @@ public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository 
         let context = persistenceController.container.newBackgroundContext()
         
         return await context.perform {
-            let fetchRequest = WeatherCityEntity.fetchRequest()
+            let fetchRequest = WeatherInfoEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %d", id)
 
             do {

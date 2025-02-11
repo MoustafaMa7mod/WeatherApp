@@ -26,18 +26,11 @@ public final class DefaultWeatherRepository: WeatherRepository {
     /// Fetches the current weather for a given location.
     ///
     /// - Parameters:
-    ///   - latitude: The latitude of the location as a string.
-    ///   - longitude: The longitude of the location as a string.
+    /// - cityName: The cityName.
     /// - Returns: A `WeatherItem` containing the transformed weather data.
     /// - Throws: An error if the network request fails.
-    public func fetchCurrentWeather(
-        latitude: String,
-        longitude: String
-    ) async throws -> WeatherItem {
-        let response = try await weatherRemoteAPI.fetchCurrentWeather(
-            latitude: latitude,
-            longitude: longitude
-        )
+    public func fetchCurrentWeather(cityName: String) async throws -> WeatherItem {
+        let response = try await weatherRemoteAPI.fetchCurrentWeather(cityName: cityName)
       
         return response.toDomain()
     }

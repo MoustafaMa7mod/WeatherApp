@@ -15,7 +15,7 @@ public protocol SearchCountryRemoteAPI {
     /// - Parameter name: The name or partial name of the country to search for.
     /// - Returns: An array of `CountryDataModel` objects retrieved from the API.
     /// - Throws: An error if the network request fails or data retrieval is unsuccessful.
-    func searchCountry(name: String) async throws -> [CountryDataModel]
+    func searchCountry(name: String) async throws -> [CityDataModel]
 }
 
 public final class DefaultSearchCountryRemoteAPI: SearchCountryRemoteAPI {
@@ -36,12 +36,12 @@ public final class DefaultSearchCountryRemoteAPI: SearchCountryRemoteAPI {
     /// - Parameter name: The name or partial name of the country to search for.
     /// - Returns: An array of `CountryDataModel` objects retrieved from the API.
     /// - Throws: An error if the network request fails.
-    public func searchCountry(name: String) async throws -> [CountryDataModel] {
-        
+    public func searchCountry(name: String) async throws -> [CityDataModel] {
+
         /// - `"q=\(name)"`: Specifies the search query parameter where `name` is the user-provided country name or partial name.
-        /// - `"limit=10"`: Limits the number of search results to a maximum of 10 entries.
-        let result: [CountryDataModel] = try await networkService.fetchData(
-            from: "q=\(name)&limit=10"
+        let result: [CityDataModel] = try await networkService.fetchData(
+            urlString: "search.json?",
+            query: "search.json?q=\(name)"
         )
 
         return result

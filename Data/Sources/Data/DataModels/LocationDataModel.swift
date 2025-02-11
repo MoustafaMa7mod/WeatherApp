@@ -1,16 +1,18 @@
 //
-//  CoordinateDataModel.swift
+//  LocationDataModel.swift
 //  Data
 //
-//  Created by Mostafa Mahmoud on 10/02/2025.
+//  Created by Mostafa Mahmoud on 11/02/2025.
 //
 
-struct CoordinateDataModel: Codable {
+struct LocationDataModel: Codable {
     
+    let name: String?
     let latitude: Double?
     let longitude: Double?
     
     enum CodingKeys: String, CodingKey {
+        case name
         case latitude = "lat"
         case longitude = "lon"
     }

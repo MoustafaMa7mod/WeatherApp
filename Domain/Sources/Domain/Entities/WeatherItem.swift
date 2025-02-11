@@ -5,37 +5,33 @@
 //  Created by Mostafa Mahmoud on 09/02/2025.
 //
 
-public struct WeatherItem: Identifiable {
+import Foundation
+
+public struct WeatherItem {
     
-    public let id: Int
     public let cityName: String
-    public let temperatureDegree: Double
+    public let temperatureCelsiusDegree: Double
+    public let temperatureFahrenheitDegree: Double
     public let humidity: Int
     public let windSpeed: Double
     public let weatherCondition: String
     public let icon: String
-    public let latitude: Double?
-    public let longitude: Double?
 
     public init(
-        id: Int,
         cityName: String,
-        temperatureDegree: Double,
+        temperatureCelsiusDegree: Double,
+        temperatureFahrenheitDegree: Double,
         humidity: Int,
         windSpeed: Double,
         weatherCondition: String,
-        icon: String,
-        latitude: Double? = nil,
-        longitude: Double? = nil
+        icon: String
     ) {
-        self.id = id
         self.cityName = cityName
-        self.temperatureDegree = temperatureDegree
+        self.temperatureCelsiusDegree = temperatureCelsiusDegree
+        self.temperatureFahrenheitDegree = temperatureFahrenheitDegree
         self.humidity = humidity
         self.windSpeed = windSpeed
         self.weatherCondition = weatherCondition
         self.icon = icon
-        self.latitude = latitude
-        self.longitude = longitude
     }
 }

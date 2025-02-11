@@ -14,7 +14,8 @@ final class HomeViewModel: ObservableObject {
     private var useCase: GetWeatherUseCase
     private let locationManager = DefaultLocationManager()
     var weatherItemPresentationModel: WeatherItemPresentationModel?
-    var weatherComponentViewModel: WeatherComponentViewModel?
+    
+    @Published var weatherComponentViewModel: WeatherComponentViewModel?
     
     /// A published property to track whether location access is denied.
     @Published var locationDenied = false
@@ -37,13 +38,8 @@ extension HomeViewModel {
             locationManager.requestLocation()
             return
         }
-
-        /// Creates a `WeatherComponentViewModel` instance with the user's location.
-        weatherComponentViewModel = WeatherComponentViewModel(
-            useCase: useCase,
-            latitude: location.latitude.description,
-            longitude: location.longitude.description
-        )
+        
+        getCityAndCountryLocation(latitude: location.latitude, longitude: location.longitude)
     }
 }
 
@@ -55,11 +51,21 @@ extension HomeViewModel: LocationManager {
     /// - Parameter coordinate: The updated coordinates of the user's location.
     func didUpdateLocation(_ coordinate: CLLocationCoordinate2D) {
 
-        if let weatherComponentViewModel {
-            
-            weatherComponentViewModel.fetchWeatherInfo(
-                latitude: coordinate.latitude.description,
-                longitude: coordinate.longitude.description
+        getCityAndCountryLocation(
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude
+        )
+    }
+    
+    func getCityAndCountryLocation(latitude: Double, longitude: Double) {
+        
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) { [weak self] location, _ in
+            guard let self,
+                  let location = location?.first else { return }
+            /// Creates a `WeatherComponentViewModel` instance with the user's location.
+            weatherComponentViewModel = WeatherComponentViewModel(
+                useCase: self.useCase,
+                cityName: location.locality ?? ""
             )
         }
     }

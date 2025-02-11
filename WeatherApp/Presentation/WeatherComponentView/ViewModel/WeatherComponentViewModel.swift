@@ -11,8 +11,7 @@ final class WeatherComponentViewModel: ObservableObject {
 
     // MARK: - Properties
     private var useCase: GetWeatherUseCase
-    private var latitude: String
-    private var longitude: String
+    private var cityName: String
     var delegate: WeatherComponentViewModelDelegate?
     var weatherItemPresentationModel: WeatherItemPresentationModel?
     
@@ -22,19 +21,16 @@ final class WeatherComponentViewModel: ObservableObject {
     init(
         useCase: GetWeatherUseCase,
         delegate: WeatherComponentViewModelDelegate? = nil,
-        latitude: String,
-        longitude: String
+        cityName: String
     ) {
         self.useCase = useCase
         self.delegate = delegate
-        self.latitude = latitude
-        self.longitude = longitude
+        self.cityName = cityName
     }
     
     func onAppear() {
-        fetchWeatherInfo(latitude: latitude, longitude: longitude)
+        fetchWeatherInfo(cityName: cityName)
     }
-    
 }
 
 // MARK: - Fetch data request
@@ -43,17 +39,13 @@ extension WeatherComponentViewModel {
     /// Fetches weather information for a given latitude and longitude.
     ///
     /// - Parameters:
-    ///   - latitude: The latitude of the location.
-    ///   - longitude: The longitude of the location.
-    func fetchWeatherInfo(latitude: String, longitude: String) {
+    ///   - cityName: The cityName
+    func fetchWeatherInfo(cityName: String) {
         
         Task(priority: .background) {
             
             do {
-                let item = try await useCase.execute(
-                    latitude: latitude,
-                    longitude: longitude
-                )
+                let item = try await useCase.execute(cityName: cityName)
                 weatherItemPresentationModel = WeatherItemPresentationModel(
                     model: item
                 )

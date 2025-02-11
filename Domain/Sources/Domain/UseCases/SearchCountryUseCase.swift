@@ -13,7 +13,7 @@ public protocol SearchCountryUseCase {
     /// - Parameter name: The name or partial name of the country to search for.
     /// - Returns: An array of `CountryItem` objects that match the search query.
     /// - Throws: An error if the search request fails or data retrieval is unsuccessful.
-    func execute(name: String) async throws -> [CountryItem]
+    func execute(name: String) async throws -> [CityItem]
 }
 
 /// The default implementation of `SearchCountryUseCase`, which retrieves country data from a repository.
@@ -38,7 +38,7 @@ public final class DefaultSearchCountryUseCase: SearchCountryUseCase {
     /// - Parameter name: The name or partial name of the country to search for.
     /// - Returns: An array of `CountryItem` objects that match the search query.
     /// - Throws: An error if the search request fails.
-    public func execute(name: String) async throws -> [CountryItem] {
+    public func execute(name: String) async throws -> [CityItem] {
         
         try await repository.searchCountry(name: name)
     }

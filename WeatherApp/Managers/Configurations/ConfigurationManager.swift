@@ -29,17 +29,4 @@ class ConfigurationManager {
     var apiKey: String {
         Bundle.main.getValueFromInfoPlist(forKey: Constants.PlistKeys.apiKey)!
     }
-    
-    /// Retrieves the image URL from the Info.plist file.
-    /// - Returns: A `String` containing the image URL.
-    var imageUrl: String {
-        Bundle.main.getValueFromInfoPlist(forKey: Constants.PlistKeys.imageURL)!
-    }
-    
-    /// Retrieves the search URL for network requests from the Info.plist file.
-    /// - Returns: A `String` containing the search URL.
-    var searchUrl: String {
-        Bundle.main.getValueFromInfoPlist(forKey: Constants.PlistKeys.searchURL)!
-    }
-    
 }

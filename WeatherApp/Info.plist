@@ -10,9 +10,5 @@
 	<string>$(BASE_URL)</string>
 	<key>apiKey</key>
 	<string>$(API_KEY)</string>
-	<key>imageURL</key>
-	<string>$(IMAGE_URL)</string>
-	<key>SearchURL</key>
-	<string>$(SEARCH_URL)</string>
 </dict>
 </plist>

@@ -10,14 +10,14 @@ import Foundation
 
 struct CountryItemPresentationModel: Identifiable, Hashable {
  
-    let id: UUID
-    let countryName: String
+    let id: Int
+    let cityName: String
     let latitude: Double
     let longitude: Double
 
-    public init(model: CountryItem) {
-        self.id = UUID()
-        self.countryName = model.countryName
+    public init(model: CityItem) {
+        self.id = model.id
+        self.cityName = model.cityName
         self.latitude = model.latitude
         self.longitude = model.longitude
     }

@@ -11,11 +11,10 @@ public protocol GetWeatherUseCase {
     /// Executes the use case to fetch the current weather for a given location.
     ///
     /// - Parameters:
-    ///   - latitude: The latitude of the location as a string.
-    ///   - longitude: The longitude of the location as a string.
+    /// - cityName: The cityName.
     /// - Returns: A `WeatherItem` containing the current weather data.
     /// - Throws: An error if the network request fails or data retrieval is unsuccessful.
-    func execute(latitude: String, longitude: String) async throws -> WeatherItem
+    func execute(cityName: String) async throws -> WeatherItem
 }
 
 /// The default implementation of `GetWeatherUseCase`, which retrieves weather data from a repository.
@@ -38,12 +37,11 @@ public final class DefaultGetWeatherUseCase: GetWeatherUseCase {
     /// Executes the use case to fetch the current weather for a given location.
     ///
     /// - Parameters:
-    ///   - latitude: The latitude of the location as a string.
-    ///   - longitude: The longitude of the location as a string.
+    ///   - cityName: The cityName.
     /// - Returns: A `WeatherItem` containing the current weather data.
     /// - Throws: An error if fetching weather data fails.
-    public func execute(latitude: String, longitude: String) async throws -> WeatherItem {
+    public func execute(cityName: String) async throws -> WeatherItem {
         
-        try await repository.fetchCurrentWeather(latitude: latitude, longitude: longitude)
+        try await repository.fetchCurrentWeather(cityName: cityName)
     }
 }

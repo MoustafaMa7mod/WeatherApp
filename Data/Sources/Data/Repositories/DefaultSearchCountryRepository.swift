@@ -28,7 +28,7 @@ public final class DefaultSearchCountryRepository: SearchCountryRepository {
     /// - Parameter name: The name or partial name of the country to search for.
     /// - Returns: An array of `CountryItem` objects transformed from the API response.
     /// - Throws: An error if the network request fails.
-    public func searchCountry(name: String) async throws -> [CountryItem] {
+    public func searchCountry(name: String) async throws -> [CityItem] {
         let response = try await searchCountryRemoteAPI.searchCountry(name: name)
       
         return response.map{ $0.toDomain() }

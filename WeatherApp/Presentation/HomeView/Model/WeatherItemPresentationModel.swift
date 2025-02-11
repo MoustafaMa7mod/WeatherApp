@@ -10,17 +10,18 @@ import SwiftUI
 
 struct WeatherItemPresentationModel: Identifiable {
  
-    private let temperature: Double
     private let humidity: Int
     private let speed: Double
     private let icon: String
-    
-    let id: Int
+    private let temperatureCelsiusDegree: Double
+    private let temperatureFahrenheitDegree: Double
+
+    let id: UUID
     let weatherCondition: String
     let cityName: String
     
     var weatherIcon: URL? {
-        URL(string: "\(ConfigurationManager.shared.imageUrl)\(icon).png")
+        URL(string: "https:\(icon)")
     }
     
     var windSpeed: String {
@@ -32,14 +33,21 @@ struct WeatherItemPresentationModel: Identifiable {
     }
     
     var temperatureDegree: String {
-        "\(temperature.getTemperature())"
+        let isCelsius = UserDefaults.standard.object(
+            forKey: Constants.UserDefaultsKeys.celsiusKey
+        ) as? Bool ?? true
+        
+        let temp = isCelsius ? temperatureCelsiusDegree : temperatureFahrenheitDegree
+        
+        return String(format: "%.1f°%@", temp, isCelsius ? "C" : "F")
     }
 
     init(model: WeatherItem) {
         
-        self.id = model.id
+        self.id = UUID()
         self.cityName = model.cityName
-        self.temperature = model.temperatureDegree
+        self.temperatureCelsiusDegree = model.temperatureCelsiusDegree
+        self.temperatureFahrenheitDegree = model.temperatureFahrenheitDegree
         self.humidity = model.humidity
         self.speed = model.windSpeed
         self.weatherCondition = model.weatherCondition
