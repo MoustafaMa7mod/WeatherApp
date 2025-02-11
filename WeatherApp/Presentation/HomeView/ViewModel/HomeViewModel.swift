@@ -59,8 +59,8 @@ extension HomeViewModel: LocationManager {
             
             weatherComponentViewModel.fetchWeatherInfo(
                 latitude: coordinate.latitude.description,
-                longitude: coordinate.longitude.description)
-            
+                longitude: coordinate.longitude.description
+            )
         }
     }
 

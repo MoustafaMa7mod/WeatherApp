@@ -14,6 +14,8 @@ public struct WeatherItem: Identifiable {
     public let windSpeed: Double
     public let weatherCondition: String
     public let icon: String
+    public let latitude: Double?
+    public let longitude: Double?
 
     public init(
         id: Int,
@@ -22,7 +24,9 @@ public struct WeatherItem: Identifiable {
         humidity: Int,
         windSpeed: Double,
         weatherCondition: String,
-        icon: String
+        icon: String,
+        latitude: Double? = nil,
+        longitude: Double? = nil
     ) {
         self.id = id
         self.cityName = cityName
@@ -31,5 +35,7 @@ public struct WeatherItem: Identifiable {
         self.windSpeed = windSpeed
         self.weatherCondition = weatherCondition
         self.icon = icon
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

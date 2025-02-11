@@ -21,4 +21,10 @@ protocol WeatherFactory {
     ///
     /// - Returns: A `SearchCountryUseCase` instance.
     func makeSearchWeatherUseCase() -> SearchCountryUseCase
+    
+    /// Creates an instance of `FavoritesCityLocalUseCase` for searching countries.
+    ///
+    /// - Returns: A `FavoritesCityLocalUseCase` instance.
+    func makeFavoritesCityLocalUseCase() -> FavoritesCityLocalUseCase
+
 }

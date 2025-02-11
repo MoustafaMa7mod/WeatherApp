@@ -30,7 +30,8 @@ struct TabbarView: View {
                 SearchView(
                     viewModel: SearchViewModel(
                         searchCountryUseCase: factory.makeSearchWeatherUseCase(),
-                        getWeatherUseCase: factory.makeGetWeatherUseCase()
+                        getWeatherUseCase: factory.makeGetWeatherUseCase(),
+                        favoritesCityLocalUseCase: factory.makeFavoritesCityLocalUseCase()
                     )
                 )
                 .tabItem {

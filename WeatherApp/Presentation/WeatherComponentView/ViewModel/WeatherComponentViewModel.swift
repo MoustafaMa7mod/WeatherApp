@@ -9,10 +9,13 @@ import Foundation
 
 final class WeatherComponentViewModel: ObservableObject {
 
+    // MARK: - Properties
     private var useCase: GetWeatherUseCase
 
     var weatherItemPresentationModel: WeatherItemPresentationModel?
+    var weatherItem: WeatherItem?
     
+    // MARK: - Methods
     init(
         useCase: GetWeatherUseCase,
         latitude: String,
@@ -37,12 +40,15 @@ extension WeatherComponentViewModel {
         Task(priority: .background) {
             
             do {
-                let item = try await useCase.execute(
+                weatherItem = try await useCase.execute(
                     latitude: latitude,
                     longitude: longitude
                 )
                 
-                weatherItemPresentationModel = WeatherItemPresentationModel(model: item)
+                if let weatherItem {
+                    weatherItemPresentationModel = WeatherItemPresentationModel(model: weatherItem)
+                }
+                
                 await reloadView()
             } catch _ {
                 //                        await handleResponseError(error)

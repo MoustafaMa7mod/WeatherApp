@@ -26,6 +26,13 @@ final class DefaultWeatherFactory: WeatherFactory {
     func makeSearchWeatherUseCase() -> SearchCountryUseCase {
         DefaultSearchCountryUseCase(repository: makeSearchWeatherRepository())
     }
+
+    /// Creates and returns a `FavoritesCityLocalUseCase` instance.
+    ///
+    /// - Returns: A `FavoritesCityLocalUseCase` instance initialized with a `FavoritesCityLocalRepository`.
+    func makeFavoritesCityLocalUseCase() -> FavoritesCityLocalUseCase {
+        DefaultFavoritesCityLocalUseCase(local: makeFavoritesCityLocalRepository())
+    }
 }
 
 // MARK: - Weather Use Case Dependency Creation
@@ -87,5 +94,16 @@ extension DefaultWeatherFactory {
             baseURL: ConfigurationManager.shared.searchUrl,
             apiKey: ConfigurationManager.shared.apiKey
         )
+    }
+}
+
+// MARK: - Add Favorites City Use Case Dependency Creation
+extension DefaultWeatherFactory {
+    
+    /// Creates and returns an instance of `DefaultFavoritesCityLocalRepository`.
+    ///
+    /// - Returns: A `DefaultFavoritesCityLocalRepository` instance.
+    private func makeFavoritesCityLocalRepository() -> FavoritesCityLocalRepository {
+        DefaultFavoritesCityLocalRepository()
     }
 }

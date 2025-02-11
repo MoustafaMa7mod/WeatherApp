@@ -11,17 +11,25 @@ import Combine
 
 final class SearchViewModel: ObservableObject {
     
+    // MARK: - Properties
     private var searchCountryUseCase: SearchCountryUseCase
     private var getWeatherUseCase: GetWeatherUseCase
+    private var favoritesCityLocalUseCase: FavoritesCityLocalUseCase
     private let locationManager = DefaultLocationManager()
     private var cancellable = Set<AnyCancellable>()
     var items: [CountryItemPresentationModel] = []
     
     @Published var cityName = ""
     
-    init(searchCountryUseCase: SearchCountryUseCase, getWeatherUseCase: GetWeatherUseCase) {
+    // MARK: - Methods
+    init(
+        searchCountryUseCase: SearchCountryUseCase,
+        getWeatherUseCase: GetWeatherUseCase,
+        favoritesCityLocalUseCase: FavoritesCityLocalUseCase
+    ) {
         self.searchCountryUseCase = searchCountryUseCase
         self.getWeatherUseCase = getWeatherUseCase
+        self.favoritesCityLocalUseCase = favoritesCityLocalUseCase
         
         setupSearchObserver()
     }
@@ -33,8 +41,10 @@ final class SearchViewModel: ObservableObject {
     ///   - longitude: The longitude of the location.
     /// - Returns: An instance of `WeatherDetailsViewModel` configured with the given coordinates.
     func initialViewModel(latitude: String, longitude: String) -> WeatherDetailsViewModel {
+        
         WeatherDetailsViewModel(
-            useCase: getWeatherUseCase,
+            getWeatherUseCase: getWeatherUseCase,
+            favoritesCityLocalUseCase: favoritesCityLocalUseCase,
             latitude: latitude,
             longitude: longitude
         )

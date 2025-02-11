@@ -38,10 +38,13 @@ struct WeatherDetailsView: View {
             // Favorite Button on the Trailing Side
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
-                    print("Trailing button tapped") // Add your action here
+                    viewModel.addCityToFavoritesTapped()
                 }) {
-                    Image(systemName: "ellipsis.circle") // Example trailing button
-                        .foregroundColor(.white)
+                    Image("unfavorite")
+                        .resizable()
+                        .scaledToFit()
+                        .tint(.white)
+                        .frame(width: 24, height: 24)
                 }
             }
         }
