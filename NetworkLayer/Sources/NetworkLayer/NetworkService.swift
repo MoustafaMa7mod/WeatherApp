@@ -12,10 +12,16 @@ import Foundation
 ///
 public class NetworkService {
     
+    private var session: URLSessionProtocol
     private var baseURL: String
     private var apiKey: String
     
-    public init(baseURL: String, apiKey: String) {
+    public init(
+        session: URLSessionProtocol = URLSession.shared,
+        baseURL: String,
+        apiKey: String
+    ) {
+        self.session = session
         self.baseURL = baseURL
         self.apiKey = apiKey
     }
@@ -36,7 +42,7 @@ public class NetworkService {
             throw APIError.invalidURL
         }
         
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let (data, response) = try await session.data(from: url)
         
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw APIError.invalidResponse
