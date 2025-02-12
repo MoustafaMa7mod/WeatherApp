@@ -13,17 +13,21 @@ import Combine
 final class HomeViewModel: ObservableObject {
 
     private var useCase: GetWeatherUseCase
-    private let locationManager = DefaultLocationManager()
     private var cancellable = Set<AnyCancellable>()
 
+    var locationManager: LocationManaging
     @Published var weatherItemPresentationModel: WeatherItemPresentationModel?
     @Published var weatherComponentViewModel: WeatherComponentViewModel?
     /// A published property to track whether location access is denied.
     @Published var locationDenied = false
 
-    init(useCase: GetWeatherUseCase) {
+    init(
+        useCase: GetWeatherUseCase,
+        locationManager: LocationManaging = DefaultLocationManager()
+    ) {
         self.useCase = useCase
-        locationManager.delegate = self
+        self.locationManager = locationManager
+        self.locationManager.delegate = self
 
         loadData()
     }
