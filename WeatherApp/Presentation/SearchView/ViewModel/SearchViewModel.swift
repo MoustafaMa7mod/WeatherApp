@@ -21,14 +21,14 @@ final class SearchViewModel: ObservableObject {
     var items: [CountryItemPresentationModel] = []
     
     @Published var cityName = "" {
-         didSet {
-             if !isObserverActive && !cityName.isEmpty {
-                 isObserverActive = true
-                 startSearch()
-             }
-         }
-     }
-     
+        didSet {
+            if !isObserverActive && !cityName.isEmpty {
+                isObserverActive = true
+                startSearch()
+            }
+        }
+    }
+    
     // MARK: - Methods
     init(
         searchCountryUseCase: SearchCountryUseCase,
@@ -60,7 +60,7 @@ final class SearchViewModel: ObservableObject {
 
 // MARK: - Private Methods
 extension SearchViewModel {
-
+    
     /// Sets up an observer to listen for changes in `cityName` and trigger searches.
     private func startSearch() {
         $cityName
@@ -71,7 +71,7 @@ extension SearchViewModel {
                     self?.items = []
                     return
                 }
-               
+                
                 self.fetchSearchCountry(name: name)
             }
             .store(in: &cancellable)
