@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NetworkLayer"
-               BuildableName = "NetworkLayer"
-               BlueprintName = "NetworkLayer"
-               ReferencedContainer = "container:">
+               BlueprintIdentifier = "99C8C0B92D5811ED00F2A09E"
+               BuildableName = "WeatherApp.app"
+               BlueprintName = "WeatherApp"
+               ReferencedContainer = "container:WeatherApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,22 +27,18 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <TestPlans>
-         <TestPlanReference
-            reference = "container:NetworkLayer.xctestplan"
-            default = "YES">
-         </TestPlanReference>
-      </TestPlans>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NetworkLayerTests"
-               BuildableName = "NetworkLayerTests"
-               BlueprintName = "NetworkLayerTests"
-               ReferencedContainer = "container:">
+               BlueprintIdentifier = "99C8C0CE2D5811EE00F2A09E"
+               BuildableName = "WeatherAppTests.xctest"
+               BlueprintName = "WeatherAppTests"
+               ReferencedContainer = "container:WeatherApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,6 +53,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "99C8C0B92D5811ED00F2A09E"
+            BuildableName = "WeatherApp.app"
+            BlueprintName = "WeatherApp"
+            ReferencedContainer = "container:WeatherApp.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -64,15 +70,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NetworkLayer"
-            BuildableName = "NetworkLayer"
-            BlueprintName = "NetworkLayer"
-            ReferencedContainer = "container:">
+            BlueprintIdentifier = "99C8C0B92D5811ED00F2A09E"
+            BuildableName = "WeatherApp.app"
+            BlueprintName = "WeatherApp"
+            ReferencedContainer = "container:WeatherApp.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NetworkLayer"
-               BuildableName = "NetworkLayer"
-               BlueprintName = "NetworkLayer"
+               BlueprintIdentifier = "Data"
+               BuildableName = "Data"
+               BlueprintName = "Data"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:NetworkLayer.xctestplan"
+            reference = "container:../../../../Data.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -39,9 +39,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NetworkLayerTests"
-               BuildableName = "NetworkLayerTests"
-               BlueprintName = "NetworkLayerTests"
+               BlueprintIdentifier = "DataTests"
+               BuildableName = "DataTests"
+               BlueprintName = "DataTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -67,9 +67,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "NetworkLayer"
-            BuildableName = "NetworkLayer"
-            BlueprintName = "NetworkLayer"
+            BlueprintIdentifier = "Data"
+            BuildableName = "Data"
+            BlueprintName = "Data"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

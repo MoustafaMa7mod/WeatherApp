@@ -7,7 +7,20 @@
 		<key>WeatherApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>99C8C0B92D5811ED00F2A09E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>99C8C0CE2D5811EE00F2A09E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
