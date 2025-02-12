@@ -1,5 +1,5 @@
 //
-//  ForecastdayDataModel.swift
+//  ForecastDayDataModel.swift
 //  Data
 //
 //  Created by Mostafa Mahmoud on 12/02/2025.
@@ -7,10 +7,18 @@
 
 import Domain
 
-struct ForecastdayDataModel: Codable {
+public struct ForecastDayDataModel: Codable {
     
     let date: String?
-    let day: WeatherForecastdayDataModel?
+    let day: WeatherForecastDayDataModel?
+    
+    public init(
+        date: String? = nil,
+        day: WeatherForecastDayDataModel? = nil
+    ) {
+        self.date = date
+        self.day = day
+    }
     
     public func toDomain() -> WeatherForecastItem {
         

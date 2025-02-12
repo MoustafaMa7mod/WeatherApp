@@ -5,7 +5,11 @@
 //  Created by Mostafa Mahmoud on 12/02/2025.
 //
 
-struct ForecastDataModel: Codable {
+public struct ForecastDataModel: Codable {
     
-    let forecastday: [ForecastdayDataModel]?
+    let forecastDay: [ForecastDayDataModel]?
+    
+    public init(forecastDay: [ForecastDayDataModel]? = nil) {
+        self.forecastDay = forecastDay
+    }
 }

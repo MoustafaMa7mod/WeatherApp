@@ -5,7 +5,11 @@
 //  Created by Mostafa Mahmoud on 11/02/2025.
 //
 
-struct LocationDataModel: Codable {
+public struct LocationDataModel: Codable {
     
     let name: String?
+    
+    public init(name: String? = nil) {
+        self.name = name
+    }
 }
