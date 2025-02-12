@@ -86,9 +86,7 @@ extension SearchViewModel {
                 let items = try await self.searchCountryUseCase.execute(name: name)
                 self.items = items.map { CountryItemPresentationModel(model: $0) }
                 await self.reloadView()
-            } catch _ {
-                //                        await handleResponseError(error)
-            }
+            } catch _ { }
         }
     }
     
