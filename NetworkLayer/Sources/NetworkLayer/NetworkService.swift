@@ -18,8 +18,8 @@ public class NetworkService {
     
     public init(
         session: URLSessionProtocol = URLSession.shared,
-        baseURL: String,
-        apiKey: String
+        baseURL: String = "",
+        apiKey: String = ""
     ) {
         self.session = session
         self.baseURL = baseURL
@@ -32,10 +32,7 @@ public class NetworkService {
     /// - Returns: A decoded object of the specified generic type `T` (must conform to `Decodable`).
     /// - Throws: `APIError` in case of an invalid URL, request failure, invalid response, or decoding error.
     /// 
-    public func fetchData<T: Decodable>(
-        urlString: String,
-        query: String
-    ) async throws -> T {
+    public func fetchData<T: Decodable>(urlString: String,query: String) async throws -> T {
         let urlValue = "\(baseURL)\(urlString)key=\(apiKey)&\(query)"
         
         guard let url = URL(string: "\(urlValue)") else {

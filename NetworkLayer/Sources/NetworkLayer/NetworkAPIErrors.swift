@@ -8,7 +8,7 @@
 /// `APIError` defines possible errors that can occur during a network request.
 /// It conforms to the `Error` protocol, making it throwable in network operations.
 ///
-enum APIError: Error, Equatable {
+public enum APIError: Error, Equatable {
     
     /// Indicates that the provided URL is invalid or malformed.
     case invalidURL

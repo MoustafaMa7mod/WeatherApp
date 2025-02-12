@@ -1,12 +1,12 @@
 //
-//  NetworkService.swift
-//  NetworkLayer
+//  MockNetworkService.swift
+//  Data
 //
 //  Created by Mostafa Mahmoud on 12/02/2025.
 //
 
 import Foundation
-@testable import NetworkLayer
+import NetworkLayer
 
 public class MockNetworkService: URLSessionProtocol {
     
@@ -14,7 +14,7 @@ public class MockNetworkService: URLSessionProtocol {
     var mockResponse: URLResponse?
     var mockError: Error?
     
-    func data(from url: URL) async throws -> (Data, URLResponse) {
+    public func data(from url: URL) async throws -> (Data, URLResponse) {
         if let error = mockError {
             throw error
         }
@@ -22,6 +22,7 @@ public class MockNetworkService: URLSessionProtocol {
         guard let data = mockData, let response = mockResponse else {
             throw APIError.invalidResponse
         }
+        
         return (data, response)
     }
 }
