@@ -10,6 +10,7 @@ import Domain
 
 final class SettingViewModel: ObservableObject {
     
+    @Published var versionTitle: String
     @Published var isCelsius: Bool {
         didSet {
             UserDefaults.standard.set(
@@ -20,9 +21,11 @@ final class SettingViewModel: ObservableObject {
     }
     
     init() {
-        
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
         self.isCelsius = UserDefaults.standard.object(
             forKey: Constants.UserDefaultsKeys.celsiusKey
         ) as? Bool ?? true
+        self.versionTitle = "App Version: \(appVersion) (\(buildNumber))"
     }
 }

@@ -16,9 +16,9 @@ struct SettingView: View {
         NavigationView {
             
             VStack(alignment: .leading, spacing: 0) {
-
+                
                 VStack(alignment: .leading, spacing: 0) {
-                   
+                    
                     Toggle(isOn: $viewModel.isCelsius) {
                         Text("Use Celsius")
                             .font(.system(size: 18, weight: .bold))
@@ -32,6 +32,12 @@ struct SettingView: View {
                 .cornerRadius(10)
                 
                 Spacer()
+                
+                Text(viewModel.versionTitle)
+                    .font(.footnote)
+                    .foregroundColor(Color.darkAppBlue)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.bottom, 20)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(12)
