@@ -99,6 +99,7 @@ extension WeatherDetailsViewModel {
         weatherComponentViewModel?
             .delegate?
             .$weatherItem
+            .receive(on: DispatchQueue.main)
             .compactMap { $0 }
             .sink { [weak self] item in
                 guard let self, let cityID else { return }

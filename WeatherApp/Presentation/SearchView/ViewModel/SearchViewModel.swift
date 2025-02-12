@@ -19,7 +19,6 @@ final class SearchViewModel: ObservableObject {
     private var cancellable = Set<AnyCancellable>()
     private var isObserverActive = false
     var items: [CountryItemPresentationModel] = []
-    
     @Published var cityName = "" {
         didSet {
             if !isObserverActive && !cityName.isEmpty {

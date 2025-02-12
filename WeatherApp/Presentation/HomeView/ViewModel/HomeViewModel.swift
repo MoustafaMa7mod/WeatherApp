@@ -16,6 +16,7 @@ final class HomeViewModel: ObservableObject {
     private var cancellable = Set<AnyCancellable>()
 
     var locationManager: LocationManaging
+    @Published var isLoading: Bool = true
     @Published var weatherItemPresentationModel: WeatherItemPresentationModel?
     @Published var weatherComponentViewModel: WeatherComponentViewModel?
     /// A published property to track whether location access is denied.
@@ -38,7 +39,7 @@ extension HomeViewModel {
 
     /// Initializes the view model by checking the user's location and setting up the weather component.
     private func loadData() {
-        
+
         guard let location = locationManager.userLocation else {
             locationManager.requestLocation()
             return
@@ -106,7 +107,7 @@ extension HomeViewModel: LocationManager {
                 delegate: WeatherComponentViewModelDelegate(),
                 cityName: location.locality ?? ""
             )
-            
+            self.isLoading = false
             observeWeatherItemChanges()
         }
     }

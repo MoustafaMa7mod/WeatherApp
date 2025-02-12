@@ -15,23 +15,35 @@ struct HomeView: View {
         
         NavigationView {
             
-            ScrollView(.vertical, showsIndicators: false) {
+            if viewModel.isLoading {
                 
-                VStack(alignment: .center, spacing: 12) {
+                VStack(alignment: .center, spacing: 0) {
+                    ProgressView()
+                        .tint(Color.appOrange)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.appBlue)
+                .navigationTitle("Home")
+            } else {
+                
+                ScrollView(.vertical, showsIndicators: false) {
                     
-                    if let viewModel = viewModel.weatherComponentViewModel {
+                    VStack(alignment: .center, spacing: 12) {
                         
-                        weatherInfo(weatherComponentViewModel: viewModel)
-                        weatherForecast(
-                            items: viewModel.weatherItemPresentationModel?.forecastItems ?? []
-                        )
-                        .padding(12)
+                        if let viewModel = viewModel.weatherComponentViewModel {
+                            
+                            weatherInfo(weatherComponentViewModel: viewModel)
+                            weatherForecast(
+                                items: viewModel.weatherItemPresentationModel?.forecastItems ?? []
+                            )
+                            .padding(12)
+                        }
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.appBlue)
+                .navigationTitle("Home")
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.appBlue)
-            .navigationTitle("Home")
         }
     }
     
