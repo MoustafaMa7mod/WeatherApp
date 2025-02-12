@@ -21,7 +21,9 @@ final class HomeViewModel: ObservableObject {
     @Published var weatherComponentViewModel: WeatherComponentViewModel?
     /// A published property to track whether location access is denied.
     @Published var locationDenied = false
-
+    @Published var errorMessage: String?
+    @Published var showError: Bool = false
+    
     init(
         useCase: GetWeatherUseCase,
         locationManager: LocationManaging = DefaultLocationManager()
@@ -80,6 +82,20 @@ extension HomeViewModel {
             }
             .store(in: &cancellable)
     }
+    
+    private func handleResponseError() {
+        
+        weatherComponentViewModel?
+            .delegate?
+            .$errorDescription
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] message in
+                self?.showError = true
+                self?.errorMessage = message
+            }
+            .store(in: &cancellable)
+    }
 }
 
 // MARK: - Location Manager
@@ -109,6 +125,7 @@ extension HomeViewModel: LocationManager {
             )
             self.isLoading = false
             observeWeatherItemChanges()
+            handleResponseError()
         }
     }
 
@@ -117,5 +134,22 @@ extension HomeViewModel: LocationManager {
     /// - Parameter error: The error that occurred.
     func didFailWithError(_ error: Error) {
         locationDenied = true
+    }
+    
+    /// This method updates the `locationPermissionDenied` property on the main thread if the user has denied or restricted location access.
+    /// If access is denied, the UI can display an alert prompting the user to enable permissions in the settings.
+    func didChangeAuthorization(status: CLAuthorizationStatus) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if (status == .denied || status == .restricted) {
+                self.isLoading = false
+                self.showError = true
+                self.errorMessage = "Location access is denied. Weather data cannot be displayed without location permissions."
+            } else {
+                self.isLoading = false
+                self.showError = false
+                self.errorMessage = nil
+            }
+        }
     }
 }

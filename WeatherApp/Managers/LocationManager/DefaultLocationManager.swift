@@ -37,8 +37,17 @@ class DefaultLocationManager: NSObject, LocationManaging, CLLocationManagerDeleg
     /// Requests the user's permission to access their location and attempts to fetch it.
     ///
     func requestLocation() {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
+        let status = CLLocationManager.authorizationStatus()
+        
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways, .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+        case .denied, .restricted:
+            delegate?.didChangeAuthorization(status: status)
+        @unknown default:
+            break
+        }
     }
     
     /// Called when new location data is available.
@@ -52,6 +61,24 @@ class DefaultLocationManager: NSObject, LocationManaging, CLLocationManagerDeleg
     ) {
         if let location = locations.first {
             delegate?.didUpdateLocation(location.coordinate)
+        }
+    }
+    
+    /// Notifies when the authorization status for location services changes.
+    /// - Parameter status: The new authorization status, which can be one of the following:
+    ///   - `.notDetermined`: The user has not yet made a choice regarding location permissions.
+    ///   - `.authorizedWhenInUse`: The app is authorized to access location data while in use.
+    ///   - `.authorizedAlways`: The app is authorized to access location data at all times.
+    ///   - `.denied`: The user has explicitly denied location access.
+    ///   - `.restricted`: The app is restricted from using location services, possibly due to parental controls or enterprise settings.
+    func locationManager(
+        _ manager: CLLocationManager,
+        didChangeAuthorization status: CLAuthorizationStatus
+    ) {
+        delegate?.didChangeAuthorization(status: status)
+        
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager.requestLocation()
         }
     }
     

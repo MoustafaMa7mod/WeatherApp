@@ -53,8 +53,9 @@ extension WeatherComponentViewModel {
                 delegate?.weatherItemPresentationModel = weatherItemPresentationModel
                 
                 await reloadView()
-            } catch _ {
-                //                        await handleResponseError(error)
+            } catch let error {
+                delegate?.errorDescription = error.localizedDescription
+                await reloadView()
             }
         }
     }

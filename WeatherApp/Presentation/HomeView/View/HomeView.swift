@@ -45,6 +45,9 @@ struct HomeView: View {
                 .navigationTitle("Home")
             }
         }
+        .alert(viewModel.errorMessage ?? "", isPresented: $viewModel.showError) {
+            Button("OK", role: .cancel) { }
+        }
     }
     
     @ViewBuilder
