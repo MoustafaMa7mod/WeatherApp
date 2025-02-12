@@ -21,7 +21,9 @@ final class WeatherDetailsViewModel: ObservableObject {
     var isFavorite: Bool = false
     var weatherComponentViewModel: WeatherComponentViewModel?
     var weatherItem: WeatherItem?
-    
+    @Published var errorMessage: String?
+    @Published var showError: Bool = false
+
     // MARK: - Methods
     init(
         getWeatherUseCase: GetWeatherUseCase,
@@ -36,6 +38,7 @@ final class WeatherDetailsViewModel: ObservableObject {
         
         initialViewModel(cityName: cityName)
         observeWeatherItemChanges()
+        handleResponseError()
     }
     
     /// Handles the action when the user taps to add a city to favorites.
@@ -105,6 +108,20 @@ extension WeatherDetailsViewModel {
                 guard let self, let cityID else { return }
                 self.weatherItem = item
                 self.checkCityInFavorites(id: cityID)
+            }
+            .store(in: &cancellable)
+    }
+    
+    private func handleResponseError() {
+        
+        weatherComponentViewModel?
+            .delegate?
+            .$errorDescription
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] message in
+                self?.showError = true
+                self?.errorMessage = message
             }
             .store(in: &cancellable)
     }
