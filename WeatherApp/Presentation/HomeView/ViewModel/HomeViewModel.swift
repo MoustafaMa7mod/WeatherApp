@@ -16,8 +16,7 @@ final class HomeViewModel: ObservableObject {
     private let locationManager = DefaultLocationManager()
     private var cancellable = Set<AnyCancellable>()
 
-    var weatherItemPresentationModel: WeatherItemPresentationModel?
-    
+    @Published var weatherItemPresentationModel: WeatherItemPresentationModel?
     @Published var weatherComponentViewModel: WeatherComponentViewModel?
     /// A published property to track whether location access is denied.
     @Published var locationDenied = false
@@ -26,7 +25,7 @@ final class HomeViewModel: ObservableObject {
         self.useCase = useCase
         locationManager.delegate = self
 
-        initialViewModel()
+        loadData()
     }
 }
 
@@ -34,7 +33,7 @@ final class HomeViewModel: ObservableObject {
 extension HomeViewModel {
 
     /// Initializes the view model by checking the user's location and setting up the weather component.
-    private func initialViewModel() {
+    private func loadData() {
         
         guard let location = locationManager.userLocation else {
             locationManager.requestLocation()
@@ -66,6 +65,7 @@ extension HomeViewModel {
             .delegate?
             .$weatherItemPresentationModel
             .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] items in
                 guard let self else { return }
                 self.weatherItemPresentationModel = items

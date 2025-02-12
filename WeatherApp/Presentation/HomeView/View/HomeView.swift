@@ -15,8 +15,19 @@ struct HomeView: View {
         
         NavigationView {
             
-            VStack(alignment: .center, spacing: 0) {
-                content
+            ScrollView(.vertical, showsIndicators: false) {
+                
+                VStack(alignment: .center, spacing: 12) {
+                    
+                    if let viewModel = viewModel.weatherComponentViewModel {
+                        
+                        weatherInfo(weatherComponentViewModel: viewModel)
+                        weatherForecast(
+                            items: viewModel.weatherItemPresentationModel?.forecastItems ?? []
+                        )
+                        .padding(12)
+                    }
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.appBlue)
@@ -25,10 +36,38 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    var content: some View {
-        if let weatherComponentViewModel = viewModel.weatherComponentViewModel {
-            
-            WeatherComponentView(viewModel: weatherComponentViewModel)
+    func weatherInfo(weatherComponentViewModel: WeatherComponentViewModel) -> some View {
+        WeatherComponentView(viewModel: weatherComponentViewModel)
+    }
+    
+    @ViewBuilder
+    func weatherForecast(items: [ForecastItemsPresentationModel]) -> some View {
+        
+        if !items.isEmpty {
+          
+            VStack(alignment: .leading, spacing: 8) {
+                
+                Text("7-Day Forecast")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color.darkAppBlue)
+                divider
+                
+                ForEach(items, id: \.id) { item in
+                    ForecastWeatherView(item: item)
+                    divider
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(16)
+            .background(Color.white)
+            .cornerRadius(20)
         }
+    }
+    
+    var divider: some View {
+        
+        Divider()
+            .frame(height: 1)
+            .background(Color.appOrange)
     }
 }

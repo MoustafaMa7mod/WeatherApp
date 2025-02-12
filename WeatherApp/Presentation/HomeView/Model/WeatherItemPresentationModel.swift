@@ -21,6 +21,7 @@ struct WeatherItemPresentationModel: Identifiable {
     let cityName: String
     let cityID: Int
     let forecastItems: [ForecastItemsPresentationModel]
+    
     var weatherIcon: URL? {
         URL(string: "https:\(icon)")
     }

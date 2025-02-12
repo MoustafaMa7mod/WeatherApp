@@ -17,6 +17,36 @@ struct ForecastItemsPresentationModel: Identifiable {
     private let minTemperatureCelsiusDegree: Double
     private let minTemperatureFahrenheitDegree: Double
     private let icon: String
+    
+    var dayTitle: String {
+        guard let day = date.getDayOfWeek else { return "" }
+        
+        return day
+    }
+    
+    var weatherIcon: URL? {
+        URL(string: "https:\(icon)")
+    }
+    
+    var minTemperatureDegree: String {
+        let isCelsius = UserDefaults.standard.object(
+            forKey: Constants.UserDefaultsKeys.celsiusKey
+        ) as? Bool ?? true
+        
+        let temp = isCelsius ? minTemperatureCelsiusDegree : minTemperatureFahrenheitDegree
+        
+        return String(format: "%.1f°%@", temp, isCelsius ? "C" : "F")
+    }
+    
+    var maxTemperatureDegree: String {
+        let isCelsius = UserDefaults.standard.object(
+            forKey: Constants.UserDefaultsKeys.celsiusKey
+        ) as? Bool ?? true
+        
+        let temp = isCelsius ? maxTemperatureCelsiusDegree : maxTemperatureFahrenheitDegree
+        
+        return String(format: "%.1f°%@", temp, isCelsius ? "C" : "F")
+    }
 
     init(model: WeatherForecastItem) {
         
