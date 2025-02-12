@@ -12,8 +12,10 @@ import Domain
 public struct DefaultFavoritesCityLocalRepository: FavoritesCityLocalRepository {
     
     private let persistenceController: PersistenceController
-       
-    public init(persistenceController: PersistenceController = .shared) {
+
+    public init(
+        persistenceController: PersistenceController = .shared
+    ) {
         self.persistenceController = persistenceController
     }
     
