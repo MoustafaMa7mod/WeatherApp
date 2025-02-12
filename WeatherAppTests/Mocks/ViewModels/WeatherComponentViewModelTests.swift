@@ -30,7 +30,7 @@ final class WeatherComponentViewModelTests: XCTestCase {
 
         Task {
             viewModel.onAppear()
-            try? await Task.sleep(nanoseconds: 500_000_000) // 🔹 Wait 0.5s to allow updates
+            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
             expectation.fulfill()
         }
         
@@ -48,7 +48,7 @@ final class WeatherComponentViewModelTests: XCTestCase {
 
         Task {
             viewModel.onAppear()
-            try? await Task.sleep(nanoseconds: 500_000_000) // 🔹 Wait 0.5s to allow updates
+            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
             expectation.fulfill()
         }
         

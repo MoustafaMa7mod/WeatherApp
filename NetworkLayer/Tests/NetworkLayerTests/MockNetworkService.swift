@@ -14,7 +14,7 @@ public class MockNetworkService: URLSessionProtocol {
     var mockResponse: URLResponse?
     var mockError: Error?
     
-    func data(from url: URL) async throws -> (Data, URLResponse) {
+    public func data(from url: URL) async throws -> (Data, URLResponse) {
         if let error = mockError {
             throw error
         }

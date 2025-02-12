@@ -40,7 +40,10 @@ extension HomeViewModel {
             return
         }
         
-        getCityAndCountryLocation(latitude: location.latitude, longitude: location.longitude)
+        getCityAndCountryLocation(
+            latitude: location.latitude,
+            longitude: location.longitude
+        )
     }
     
     /// Observes changes to the `weatherItem` property in `weatherComponentViewModel`

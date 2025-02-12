@@ -56,13 +56,8 @@ final class SearchViewModel: ObservableObject {
         )
     }
     
-}
-
-// MARK: - Private Methods
-extension SearchViewModel {
-    
     /// Sets up an observer to listen for changes in `cityName` and trigger searches.
-    private func startSearch() {
+    func startSearch() {
         $cityName
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .removeDuplicates()
@@ -76,6 +71,10 @@ extension SearchViewModel {
             }
             .store(in: &cancellable)
     }
+}
+
+// MARK: - Private Methods
+extension SearchViewModel {
     
     /// Fetches country data based on the user's search input.
     ///

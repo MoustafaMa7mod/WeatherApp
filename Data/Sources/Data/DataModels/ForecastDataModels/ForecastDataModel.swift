@@ -12,4 +12,8 @@ public struct ForecastDataModel: Codable {
     public init(forecastDay: [ForecastDayDataModel]? = nil) {
         self.forecastDay = forecastDay
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case forecastDay = "forecastday"
+    }
 }

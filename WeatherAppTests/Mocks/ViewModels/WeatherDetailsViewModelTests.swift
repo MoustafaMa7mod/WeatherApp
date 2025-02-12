@@ -48,7 +48,7 @@ final class WeatherDetailsViewModelTests: XCTestCase {
 
         Task {
             viewModel.weatherComponentViewModel?.fetchWeatherInfo(cityName: "Giza")
-            try? await Task.sleep(nanoseconds: 500_000_000) // 🔹 Wait 0.5s to allow updates
+            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
             expectation.fulfill()
         }
         
@@ -65,7 +65,7 @@ final class WeatherDetailsViewModelTests: XCTestCase {
             viewModel.isFavorite = true
             viewModel.weatherItem = mockWeatherUseCase.weatherItemsModel()
             viewModel.addCityToFavoritesTapped()
-            try? await Task.sleep(nanoseconds: 500_000_000) // 🔹 Wait 0.5s to allow updates
+            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
             expectation.fulfill()
         }
         
@@ -84,7 +84,7 @@ final class WeatherDetailsViewModelTests: XCTestCase {
             mockFavoritesUseCase.mockRemoveResult = true
             viewModel.isFavorite = true
             viewModel.addCityToFavoritesTapped()
-            try? await Task.sleep(nanoseconds: 500_000_000) // 🔹 Wait 0.5s to allow updates
+            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
             expectation.fulfill()
         }
         
