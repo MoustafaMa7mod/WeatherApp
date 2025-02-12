@@ -50,6 +50,8 @@ extension WeatherComponentViewModel {
                     model: item
                 )
                 delegate?.weatherItem = item
+                delegate?.weatherItemPresentationModel = weatherItemPresentationModel
+                
                 await reloadView()
             } catch _ {
                 //                        await handleResponseError(error)

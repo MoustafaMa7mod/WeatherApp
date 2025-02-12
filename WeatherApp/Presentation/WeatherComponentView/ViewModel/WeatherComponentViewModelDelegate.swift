@@ -11,4 +11,5 @@ import SwiftUI
 class WeatherComponentViewModelDelegate: ObservableObject {
     
     @Published var weatherItem: WeatherItem?
+    @Published var weatherItemPresentationModel: WeatherItemPresentationModel?
 }

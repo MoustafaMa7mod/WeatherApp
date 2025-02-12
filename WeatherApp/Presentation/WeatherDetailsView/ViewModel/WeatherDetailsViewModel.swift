@@ -99,7 +99,7 @@ extension WeatherDetailsViewModel {
         weatherComponentViewModel?
             .delegate?
             .$weatherItem
-            .compactMap { $0 } // Ensures we only get non-nil values
+            .compactMap { $0 }
             .sink { [weak self] item in
                 guard let self, let cityID else { return }
                 self.weatherItem = item

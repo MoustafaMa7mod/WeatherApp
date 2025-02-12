@@ -11,7 +11,6 @@ import SwiftUI
 struct ForecastItemsPresentationModel: Identifiable {
  
     let id: UUID
-    
     private let date: String
     private let maxTemperatureCelsiusDegree: Double
     private let maxTemperatureFahrenheitDegree: Double
