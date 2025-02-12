@@ -91,5 +91,4 @@ final class FavoritesCityLocalRepositoryTest: XCTestCase {
             icon: "//cdn.weatherapi.com/weather/64x64/night/113.png"
         )
     }
-    
 }

@@ -11,9 +11,16 @@ let package = Package(
             name: "Domain",
             targets: ["Domain"]),
     ],
+    dependencies: [
+        .package(path: "../NetworkLayer")
+    ],
     targets: [
         .target(
-            name: "Domain"),
+            name: "Domain",
+            dependencies: [
+                "NetworkLayer"
+            ]
+        ),        
         .testTarget(
             name: "DomainTests",
             dependencies: ["Domain"]
