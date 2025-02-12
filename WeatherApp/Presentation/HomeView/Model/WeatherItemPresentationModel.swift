@@ -20,7 +20,7 @@ struct WeatherItemPresentationModel: Identifiable {
     let weatherCondition: String
     let cityName: String
     let cityID: Int
-
+    let forecastItems: [ForecastItemsPresentationModel]
     var weatherIcon: URL? {
         URL(string: "https:\(icon)")
     }
@@ -54,6 +54,9 @@ struct WeatherItemPresentationModel: Identifiable {
         self.speed = model.windSpeed
         self.weatherCondition = model.weatherCondition
         self.icon = model.icon
+        self.forecastItems = model.forecastItems.map {
+            ForecastItemsPresentationModel(model: $0 )
+        }
     }
 }
 

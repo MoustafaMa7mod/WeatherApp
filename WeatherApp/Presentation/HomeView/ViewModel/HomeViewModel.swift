@@ -16,7 +16,6 @@ final class HomeViewModel: ObservableObject {
     var weatherItemPresentationModel: WeatherItemPresentationModel?
     
     @Published var weatherComponentViewModel: WeatherComponentViewModel?
-    
     /// A published property to track whether location access is denied.
     @Published var locationDenied = false
 

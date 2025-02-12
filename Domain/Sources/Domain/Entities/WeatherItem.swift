@@ -17,6 +17,7 @@ public struct WeatherItem {
     public let windSpeed: Double
     public let weatherCondition: String
     public let icon: String
+    public let forecastItems: [WeatherForecastItem]
 
     public init(
         cityID: Int? = nil,
@@ -26,7 +27,8 @@ public struct WeatherItem {
         humidity: Int,
         windSpeed: Double,
         weatherCondition: String,
-        icon: String
+        icon: String,
+        forecastItems: [WeatherForecastItem] = []
     ) {
         self.cityID = cityID
         self.cityName = cityName
@@ -36,5 +38,6 @@ public struct WeatherItem {
         self.windSpeed = windSpeed
         self.weatherCondition = weatherCondition
         self.icon = icon
+        self.forecastItems = forecastItems
     }
 }

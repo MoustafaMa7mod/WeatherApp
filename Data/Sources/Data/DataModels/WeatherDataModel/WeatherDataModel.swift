@@ -12,21 +12,27 @@ public struct WeatherDataModel: Codable {
     
     let location: LocationDataModel?
     let currentWeatherInfo: CurrentWeatherDataModel?
+    let forecast: ForecastDataModel?
 
     enum CodingKeys: String, CodingKey {
         case currentWeatherInfo = "current"
-        case location
+        case location, forecast
     }
     
     public func toDomain() -> WeatherItem {
-        WeatherItem(
+        
+        let forecastday = forecast?.forecastday ?? []
+        let forecastItems = forecastday.map { $0.toDomain() }
+
+        return WeatherItem(
             cityName: location?.name ?? "",
             temperatureCelsiusDegree: currentWeatherInfo?.tempCelsius ?? 0,
             temperatureFahrenheitDegree: currentWeatherInfo?.tempFahrenheit ?? 0,
             humidity: currentWeatherInfo?.humidity ?? 0,
             windSpeed: currentWeatherInfo?.windSpeed ?? 0,
             weatherCondition: currentWeatherInfo?.condition?.description ?? "",
-            icon: currentWeatherInfo?.condition?.icon ?? ""
+            icon: currentWeatherInfo?.condition?.icon ?? "",
+            forecastItems: forecastItems
         )
     }
 }
