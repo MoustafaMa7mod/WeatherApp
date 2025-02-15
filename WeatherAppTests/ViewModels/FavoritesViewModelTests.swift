@@ -29,67 +29,50 @@ final class FavoritesViewModelTests: XCTestCase {
     
     func testFetchFavoritesCity_Success() async {
         
-        let expectation = expectation(description: "Fetching favorite cities")
-        
-        Task {
-            viewModel.onAppear()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
+        do {
+            try await viewModel.fetchFavoritesCity()
+            XCTAssertEqual(viewModel.weatherItemPresentationModel.count, 2)
+
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
-                
-        XCTAssertEqual(viewModel.weatherItemPresentationModel.count, 2)
     }
     
     func testFetchFavoritesCity_Failure() async {
 
         mockUseCase.shouldThrowError = true
         
-        let expectation = expectation(description: "Fetching favorite cities")
-        
-        Task {
-            viewModel.onAppear()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
-        }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
+        do {
+            try await viewModel.fetchFavoritesCity()
+            XCTFail("Expected an error but got success")
 
-        XCTAssertTrue(viewModel.weatherItemPresentationModel.isEmpty)
+        } catch let error {
+            XCTAssertEqual(error.localizedDescription, "Failed to fetch FavoritesCities")
+        }
     }
     
     func testRemoveCityFromFavorites_Success() async {
-
         mockUseCase.mockRemoveResult = true
-                
-        let expectation = expectation(description: "Fetching favorite cities")
         
-        Task {
-            viewModel.removeCityFromFavorites(id: 686859)
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
-        }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
+        do {
+            let result = try await viewModel.removeFavorites(id: 686859)
+            XCTAssertTrue(mockUseCase.removeCityCalled)
+            XCTAssertEqual(result, mockUseCase.removeCityCalled)
 
-        XCTAssertTrue(mockUseCase.removeCityCalled)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
     }
     
     func testRemoveCityFromFavorites_Failure() async {
-        
         mockUseCase.shouldThrowError = true
-        
-        let expectation = expectation(description: "Fetching favorite cities")
-        
-        Task {
-            viewModel.removeCityFromFavorites(id: 686859)
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
+
+        do {
+            _ = try await viewModel.removeFavorites(id: 686859)
+            XCTFail("Expected an error but got success")
+
+        } catch let error {
+            XCTAssertEqual(error.localizedDescription, "Failed to remove City from Favorites")
         }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
-        
-        XCTAssertTrue(mockUseCase.removeCityCalled)
     }
 }

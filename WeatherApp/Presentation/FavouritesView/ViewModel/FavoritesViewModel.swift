@@ -7,6 +7,7 @@
 
 import Foundation
 import Domain
+import OSLog
 
 final class FavoritesViewModel: ObservableObject {
     
@@ -20,7 +21,14 @@ final class FavoritesViewModel: ObservableObject {
     }
     
     func onAppear() {
-        fetchFavoritesCity()
+        Task(priority: .background) {
+            do {
+                try await fetchFavoritesCity()
+                await reloadView()
+            } catch let error {
+                Logger().error("Failed to fetch cities from favorites \(error.localizedDescription)")
+            }
+        }
     }
     
     /// Removes a city from the favorites list asynchronously.
@@ -33,18 +41,20 @@ final class FavoritesViewModel: ObservableObject {
         
         Task(priority: .background) {
             do {
-                let result = try await useCase.removeCityFavorites(id: id)
+                let result = try await removeFavorites(id: id)
                 if result {
-                    fetchFavoritesCity()
+                    onAppear()
                 }
-            } catch {
+            } catch let error {
+                print("Failed to remove city from favorites: \(error.localizedDescription)")
             }
         }
     }
-}
-
-// MARK: - Private Methods
-extension FavoritesViewModel {
+    
+    func removeFavorites(id: Int) async throws -> Bool {
+        let result = try await useCase.removeCityFavorites(id: id)
+        return result
+    }
     
     /// Fetches the list of favorite cities asynchronously and updates the presentation model.
     ///
@@ -53,20 +63,18 @@ extension FavoritesViewModel {
     /// into `WeatherItemPresentationModel` for display.
     ///
     /// If an error occurs, it is currently not handled but can be logged or processed later.
-    private func fetchFavoritesCity() {
+    func fetchFavoritesCity() async throws {
         
-        Task(priority: .background) {
-            do {
-                let result = try await useCase.fetchFavoritesCities()
-                weatherItemPresentationModel = result.map { WeatherItemPresentationModel(model: $0)
-                }
-                await reloadView()
-            } catch {
-                
-            }
+        let result = try await useCase.fetchFavoritesCities()
+        weatherItemPresentationModel = result.map {
+            WeatherItemPresentationModel(model: $0)
         }
     }
+}
 
+// MARK: - Private Methods
+extension FavoritesViewModel {
+    
     /// Triggers a UI update after the data has been modified.
     @MainActor
     private func reloadView() {

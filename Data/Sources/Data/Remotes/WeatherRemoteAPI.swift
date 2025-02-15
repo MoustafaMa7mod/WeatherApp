@@ -16,7 +16,9 @@ public protocol WeatherRemoteAPI {
     /// - cityName: The cityName.
     /// - Returns: A `WeatherDataModel` object containing the weather data retrieved from the API.
     /// - Throws: An error if the network request fails or data retrieval is unsuccessful.
-    func fetchCurrentWeather(cityName: String) async throws -> WeatherDataModel
+    func fetchCurrentWeather(
+        cityName: String
+    ) async throws -> WeatherDataModel
 }
 
 public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
@@ -28,7 +30,9 @@ public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
     /// Initializes the remote API implementation with a network service.
     ///
     /// - Parameter networkService: An instance of `NetworkService` to handle API requests.
-    public init(networkService: NetworkService) {
+    public init(
+        networkService: NetworkService
+    ) {
         self.networkService = networkService
     }
     
@@ -38,7 +42,9 @@ public final class DefaultWeatherRemoteAPI: WeatherRemoteAPI {
     /// - cityName: The cityName.
     /// - Returns: A `WeatherDataModel` object containing the weather data retrieved from the API.
     /// - Throws: An error if the network request fails.
-    public func fetchCurrentWeather(cityName: String) async throws -> WeatherDataModel {
+    public func fetchCurrentWeather(
+        cityName: String
+    ) async throws -> WeatherDataModel {
         let result: WeatherDataModel = try await networkService.fetchData(
             urlString: "forecast.json?",
             query: "q=\(cityName)&days=7"

@@ -15,7 +15,13 @@ final class MockFavoritesCityLocalUseCase: FavoritesCityLocalUseCase {
     var removeCityCalled = false
 
     func fetchFavoritesCities() async throws -> [WeatherItem] {
-        if shouldThrowError { throw NSError(domain: "", code: -1) }
+        if shouldThrowError {
+            throw NSError(
+                domain: "Mock Error",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to fetch FavoritesCities"]
+            )
+        }
         return weatherItemsModel()
     }
 
@@ -24,13 +30,25 @@ final class MockFavoritesCityLocalUseCase: FavoritesCityLocalUseCase {
         cityName: String,
         cityID: Int
     ) async throws -> Bool {
-        if shouldThrowError { throw NSError(domain: "", code: -1) }
+        if shouldThrowError {
+            throw NSError(
+                domain: "Mock Error",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to add city to Favorites"]
+            )
+        }
         return true
     }
 
     func removeCityFavorites(id: Int) async throws -> Bool {
         removeCityCalled = true
-        if shouldThrowError { throw NSError(domain: "", code: -1) }
+        if shouldThrowError {
+            throw NSError(
+                domain: "Mock Error",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Failed to remove City from Favorites"]
+            )
+        }
         return mockRemoveResult
     }
 }
