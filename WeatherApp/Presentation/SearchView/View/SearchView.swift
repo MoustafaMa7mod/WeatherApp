@@ -65,6 +65,9 @@ struct SearchView: View {
                 )
             }
         }
+        .alert(viewModel.errorMessage ?? "", isPresented: $viewModel.showError) {
+            Button("OK", role: .cancel) { }
+        }
     }
     
     @ViewBuilder

@@ -7,6 +7,8 @@
 
 import XCTest
 import Combine
+import NetworkLayer
+
 @testable import WeatherApp
 
 final class SearchViewModelTests: XCTestCase {
@@ -42,38 +44,27 @@ final class SearchViewModelTests: XCTestCase {
     
     func testSearchCity_Success() async {
         
-        viewModel.cityName = "Lond"
-
-        let expectation = expectation(description: "Fetching favorite cities")
-        
-        Task {
-            viewModel.startSearch()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
+        do {
+            try await viewModel.searchCountry(name: "Lond")
+            XCTAssertEqual(viewModel.items.count, 2)
+            XCTAssertEqual(viewModel.items.first?.cityName, "London")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
-
-        XCTAssertEqual(viewModel.items.count, 2)
-        XCTAssertEqual(viewModel.items.first?.cityName, "London")
     }
     
     func testSearchCity_Failure() async {
         mockSearchCountryUseCase.mockError = .requestFailed
-        
-        viewModel.cityName = "Lond"
-        
-        let expectation = expectation(description: "Fetching favorite cities")
-        
-        Task {
-            viewModel.startSearch()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
-        }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
 
-        XCTAssertEqual(viewModel.items.count, 0) // Expect no items due to error
+        do {
+            try await viewModel.searchCountry(name: "Lond")
+
+            XCTFail("Expected an error but got success")
+        } catch let error as APIError {
+            XCTAssertEqual(error, .requestFailed)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
     }
     
     func testInitialViewModel_Creation() {

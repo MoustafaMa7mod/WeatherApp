@@ -19,6 +19,8 @@ final class SearchViewModel: ObservableObject {
     private var cancellable = Set<AnyCancellable>()
     private var isObserverActive = false
     var items: [CountryItemPresentationModel] = []
+    @Published var errorMessage: String?
+    @Published var showError: Bool = false
     @Published var cityName = "" {
         didSet {
             if !isObserverActive && !cityName.isEmpty {
@@ -70,6 +72,12 @@ final class SearchViewModel: ObservableObject {
             }
             .store(in: &cancellable)
     }
+    
+    func searchCountry(name: String) async throws {
+        
+        let items = try await self.searchCountryUseCase.execute(name: name)
+        self.items = items.map { CountryItemPresentationModel(model: $0) }
+    }
 }
 
 // MARK: - Private Methods
@@ -83,10 +91,12 @@ extension SearchViewModel {
         Task(priority: .background) {
             
             do {
-                let items = try await self.searchCountryUseCase.execute(name: name)
-                self.items = items.map { CountryItemPresentationModel(model: $0) }
+                try await searchCountry(name: name)
                 await self.reloadView()
-            } catch _ { }
+            } catch let error {
+                self.showError = true
+                self.errorMessage = error.localizedDescription
+            }
         }
     }
     
