@@ -6,6 +6,8 @@
 //
 
 import XCTest
+import NetworkLayer
+
 @testable import WeatherApp
 
 final class WeatherComponentViewModelTests: XCTestCase {
@@ -26,34 +28,31 @@ final class WeatherComponentViewModelTests: XCTestCase {
     }
 
     func testFetchWeatherInfo_Success() async {
-        let expectation = expectation(description: "Fetching weather succeeds")
-
-        Task {
-            viewModel.onAppear()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
-        }
         
-        await fulfillment(of: [expectation], timeout: 3.0)
+        do {
+            try await viewModel.fetchWeatherInfo(cityName: "Giza")
+            XCTAssertNotNil(viewModel.weatherItemPresentationModel)
+            XCTAssertEqual(viewModel.weatherItemPresentationModel?.cityName, "Giza")
+            XCTAssertEqual(viewModel.weatherItemPresentationModel?.weatherHumidity, "77%")
 
-        XCTAssertNotNil(viewModel.weatherItemPresentationModel)
-        XCTAssertEqual(viewModel.weatherItemPresentationModel?.cityName, "Giza")
-        XCTAssertEqual(viewModel.weatherItemPresentationModel?.weatherHumidity, "77%")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
     }
 
     func testFetchWeatherInfo_Failure() async {
         mockUseCase.mockError = .requestFailed
 
-        let expectation = expectation(description: "Fetching weather fails")
+        do {
+            try await viewModel.fetchWeatherInfo(cityName: "Giza")
 
-        Task {
-            viewModel.onAppear()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
+            XCTFail("Expected an error but got success")
+        } catch let error as APIError {
+            XCTAssertEqual(error, .requestFailed)
+            XCTAssertNil(viewModel.weatherItemPresentationModel)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+            XCTAssertNil(viewModel.weatherItemPresentationModel)
         }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
-
-        XCTAssertNil(viewModel.weatherItemPresentationModel)
     }
 }

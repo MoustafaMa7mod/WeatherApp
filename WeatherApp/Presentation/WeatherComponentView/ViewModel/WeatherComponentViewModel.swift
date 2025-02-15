@@ -29,7 +29,17 @@ final class WeatherComponentViewModel: ObservableObject {
     }
     
     func onAppear() {
-        fetchWeatherInfo(cityName: cityName)
+        Task(priority: .background) {
+            
+            do {
+                try await fetchWeatherInfo(cityName: cityName)
+                await reloadView()
+            } catch let error {
+                delegate?.errorDescription = error.localizedDescription
+                await reloadView()
+            }
+        }
+        
     }
 }
 
@@ -40,24 +50,14 @@ extension WeatherComponentViewModel {
     ///
     /// - Parameters:
     ///   - cityName: The cityName
-    func fetchWeatherInfo(cityName: String) {
+    func fetchWeatherInfo(cityName: String) async throws {
         
-        Task(priority: .background) {
-            
-            do {
-                let item = try await useCase.execute(cityName: cityName)
-                weatherItemPresentationModel = WeatherItemPresentationModel(
-                    model: item
-                )
-                delegate?.weatherItem = item
-                delegate?.weatherItemPresentationModel = weatherItemPresentationModel
-                
-                await reloadView()
-            } catch let error {
-                delegate?.errorDescription = error.localizedDescription
-                await reloadView()
-            }
-        }
+        let item = try await useCase.execute(cityName: cityName)
+        weatherItemPresentationModel = WeatherItemPresentationModel(
+            model: item
+        )
+        delegate?.weatherItem = item
+        delegate?.weatherItemPresentationModel = weatherItemPresentationModel
     }
 }
 
