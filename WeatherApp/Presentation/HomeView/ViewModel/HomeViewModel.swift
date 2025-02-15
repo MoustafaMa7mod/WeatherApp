@@ -76,9 +76,9 @@ extension HomeViewModel {
             .$weatherItemPresentationModel
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] items in
+            .sink { [weak self] item in
                 guard let self else { return }
-                self.weatherItemPresentationModel = items
+                self.weatherItemPresentationModel = item
             }
             .store(in: &cancellable)
     }

@@ -110,5 +110,4 @@ final class HomeViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
         XCTAssertNotNil(viewModel.weatherComponentViewModel)
     }
-    
 }

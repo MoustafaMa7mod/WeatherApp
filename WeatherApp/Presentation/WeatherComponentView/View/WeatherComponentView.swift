@@ -10,11 +10,7 @@ import SwiftUI
 
 struct WeatherComponentView: View {
     
-    @ObservedObject var viewModel: WeatherComponentViewModel
-    
-    init(viewModel: WeatherComponentViewModel) {
-        self.viewModel = viewModel
-    }
+    @StateObject var viewModel: WeatherComponentViewModel
     
     var body: some View {
         
