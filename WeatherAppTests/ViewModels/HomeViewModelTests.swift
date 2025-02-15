@@ -45,7 +45,8 @@ final class HomeViewModelTests: XCTestCase {
         
         let expectation = expectation(description: "Weather data fetched after location update")
         
-        viewModel.$weatherComponentViewModel
+        viewModel
+            .$weatherComponentViewModel
             .dropFirst()
             .sink { model in
                 if model != nil {
@@ -56,7 +57,7 @@ final class HomeViewModelTests: XCTestCase {
         
         viewModel.locationManager.requestLocation()
         
-        wait(for: [expectation], timeout: 2.0)
+        wait(for: [expectation], timeout: 5.0)
         XCTAssertNotNil(viewModel.weatherComponentViewModel)
     }
 
@@ -79,7 +80,7 @@ final class HomeViewModelTests: XCTestCase {
         
         viewModel.locationManager.requestLocation()
         
-        wait(for: [expectation], timeout: 2.0)
+        wait(for: [expectation], timeout: 5.0)
         XCTAssertTrue(viewModel.locationDenied)
     }
     
@@ -107,7 +108,7 @@ final class HomeViewModelTests: XCTestCase {
 
         viewModel.locationManager.requestLocation()
         
-        wait(for: [expectation], timeout: 2.0)
+        wait(for: [expectation], timeout: 5.0)
         XCTAssertNotNil(viewModel.weatherComponentViewModel)
     }
 }

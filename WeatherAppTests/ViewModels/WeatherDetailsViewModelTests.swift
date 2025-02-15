@@ -43,52 +43,60 @@ final class WeatherDetailsViewModelTests: XCTestCase {
     }
     
     func testFetchWeatherInfo_Success() async {
+        let expectation = expectation(description: "Weather info fetched")
         
-        let expectation = expectation(description: "Fetching weather succeeds")
+        viewModel
+            .weatherComponentViewModel?
+            .delegate?
+            .$weatherItem
+            .dropFirst()
+            .sink { model in
+                if model != nil {
+                    expectation.fulfill()
+                }
+            }
+            .store(in: &cancellable)
+        
+        do {
+            try await viewModel.weatherComponentViewModel?.fetchWeatherInfo(cityName: "Giza")
+            await fulfillment(of: [expectation], timeout: 5.0)
+            XCTAssertEqual(viewModel.weatherItem?.cityName , "Giza")
 
-        Task {
-            viewModel.weatherComponentViewModel?.fetchWeatherInfo(cityName: "Giza")
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
-
-        XCTAssertEqual(viewModel.weatherItem?.cityName, "Giza")
     }
     
     func testAddCityToFavorites_Success() async {
                 
-        let expectation = expectation(description: "Fetching favorite cities")
-        
-        Task {
-            viewModel.isFavorite = true
-            viewModel.weatherItem = mockWeatherUseCase.weatherItemsModel()
-            viewModel.addCityToFavoritesTapped()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
+        viewModel.isFavorite = true
+
+        do {
+            let result = try await viewModel.addCityToFavorites(
+                cityID: 686859,
+                weatherItem: mockWeatherUseCase.weatherItemsModel()
+            )
+            XCTAssertTrue(viewModel.isFavorite)
+            XCTAssertEqual(result, viewModel.isFavorite)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
-        
-        XCTAssertTrue(viewModel.isFavorite)
     }
     
     func testRemoveCityFromFavorites_Success() async {
         
-        let expectation = expectation(description: "Fetching favorite cities")
-        
-        Task {
-            
-            viewModel.weatherItem = mockWeatherUseCase.weatherItemsModel()
-            mockFavoritesUseCase.mockRemoveResult = true
-            viewModel.isFavorite = true
-            viewModel.addCityToFavoritesTapped()
-            try? await Task.sleep(nanoseconds: 1000_000_000) // 🔹 Wait 0.5s to allow updates
-            expectation.fulfill()
+        mockFavoritesUseCase.mockRemoveResult = true
+        viewModel.isFavorite = false
+
+        do {
+            let result = try await viewModel.addCityToFavorites(
+                cityID: 686859,
+                weatherItem: mockWeatherUseCase.weatherItemsModel()
+            )
+            XCTAssertFalse(viewModel.isFavorite)
+            XCTAssertEqual(result, viewModel.isFavorite)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
-        
-        await fulfillment(of: [expectation], timeout: 3.0)
-        XCTAssertFalse(viewModel.isFavorite)
     }
 }

@@ -62,9 +62,11 @@ final class SearchViewModel: ObservableObject {
         $cityName
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .removeDuplicates()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] name in
                 guard let self, !name.isEmpty else {
                     self?.items = []
+                    self?.objectWillChange.send()
                     return
                 }
                 

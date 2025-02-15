@@ -14,6 +14,15 @@ WeatherApp is a simple SwiftUI-based weather application that allows users to ma
 - Favorite list: Users can show all favorite's cities in screen with summery.
 - Asynchronous Data Fetching: Fetch weather data asynchronously with loading indicators.
 
+**Project Structure**
+
+📂 GamerPower
+├── 📂 Presentation (SwiftUI Views & ViewModels)
+├── 📂 Domain (Use Cases & Business Logic)
+├── 📂 Data (Repositories & API Handlers)
+├── 📂 NetworkLayer (Local Swift Package for API requests using URLSession)
+├── 📂 Resources (Assets, Strings, etc.)
+
 **Technologies Used**
 
 - SwiftUI: Framework for building the user interface.

@@ -19,10 +19,10 @@ final class WeatherDetailsViewModel: ObservableObject {
     private var cityName: String
     private var cancellable = Set<AnyCancellable>()
     var isFavorite: Bool = false
-    var weatherComponentViewModel: WeatherComponentViewModel?
     var weatherItem: WeatherItem?
     @Published var errorMessage: String?
     @Published var showError: Bool = false
+    @Published var weatherComponentViewModel: WeatherComponentViewModel?
 
     // MARK: - Methods
     init(
@@ -50,17 +50,31 @@ final class WeatherDetailsViewModel: ObservableObject {
         guard let weatherItem, let cityID else { return }
         
         Task(priority: .background) {
-            
-            isFavorite = await isCityInFavorites(id: cityID)
-            
-            guard !isFavorite else {
-                isFavorite = !(await removeCityFromFavorites(id: cityID))
+            do {
+                isFavorite = try await addCityToFavorites(
+                    cityID: cityID,
+                    weatherItem: weatherItem
+                )
                 await reloadView()
-                return
+            } catch {
+                print("Failed to update city favorite status: \(error)")
             }
-            
-            isFavorite = await addCityToFavorites(item: weatherItem)
-            await reloadView()
+        }
+    }
+    
+    func addCityToFavorites(
+        cityID: Int,
+        weatherItem: WeatherItem
+    ) async throws -> Bool {
+        
+        let isAlreadyFavorite = await isCityInFavorites(id: cityID)
+        
+        if isAlreadyFavorite {
+            let removed = await removeCityFromFavorites(id: cityID)
+            return !removed
+        } else {
+            let added = await addCityToFavorites(item: weatherItem)
+            return added
         }
     }
 }
